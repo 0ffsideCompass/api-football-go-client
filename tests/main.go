@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	apiKey := "xxxxxxxx"
+	apiKey := "xxxxxxxxx"
 
 	client, err := client.New(apiKey, &http.Client{})
 	if err != nil {

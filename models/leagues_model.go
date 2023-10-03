@@ -2,10 +2,10 @@ package models
 
 // LeagueResponse is the response from the /leagues endpoint
 type LeaguesResponse struct {
-	Get        string        `json:"get"`
-	Parameters []interface{} `json:"parameters"`
-	Errors     []interface{} `json:"errors"`
-	Results    int           `json:"results"`
+	Get        string      `json:"get"`
+	Parameters interface{} `json:"parameters"`
+	Errors     interface{} `json:"errors"`
+	Results    int         `json:"results"`
 	Paging     struct {
 		Current int `json:"current"`
 		Total   int `json:"total"`
