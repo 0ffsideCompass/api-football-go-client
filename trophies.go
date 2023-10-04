@@ -60,12 +60,12 @@ func validateTrophiesParams(params map[string]interface{}) error {
 
 	for key, value := range params {
 		if key == "coach" || key == "player" {
-			val, ok := value.(float64)
+			val, ok := value.(int)
 			if !ok {
 				return fmt.Errorf("%s must be an integer", key)
 			}
 
-			if val != float64(int(val)) {
+			if val != int(int(val)) {
 				return fmt.Errorf("%s must be an integer", key)
 			}
 		}
