@@ -213,15 +213,10 @@ func (c *Client) FixtureHeadToHead(
 	params map[string]interface{},
 ) (*models.FixtureHeadToHeadResp, error) {
 
-	// Validate the parameters
-	if err := validateFixtureHeadToHeadParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureHeadToHeadEndpoint)
 
 	body, err := c.get(
-		fmt.Sprintf(
+		c.buildURL(
 			endpointURL,
 			params,
 		),
