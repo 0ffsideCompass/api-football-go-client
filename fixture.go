@@ -13,7 +13,7 @@ import (
 
 const (
 	fixturesByDateEndpoint    = "fixtures?league=%d&season=%d&from=%s&to=%s"
-	fixtureHeadToHeadEndpoint = "fixtures/headtohead?h2h=%d-%d"
+	fixtureHeadToHeadEndpoint = "fixtures/headtohead"
 	fixtureRounds             = "fixtures/rounds?league=%d&season=%d" //TODO not important yet
 	fixtureEndpoint           = "fixtures"
 	fixtureStatisticsEndpoint = "fixtures/statistics"
@@ -218,7 +218,7 @@ func (c *Client) FixtureHeadToHead(
 		return nil, err
 	}
 
-	endpointURL := fmt.Sprintf("%s%s", c.Domain, trophiesEndpoint)
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureHeadToHeadEndpoint)
 
 	body, err := c.get(
 		fmt.Sprintf(
