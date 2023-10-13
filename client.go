@@ -57,10 +57,7 @@ func (c *Client) get(url string) ([]byte, error) {
 	}
 
 	defer res.Body.Close()
-	body, err := io.ReadAll(res.Body)
-
-	fmt.Println(string(body))
-	return body, err
+	return io.ReadAll(res.Body)
 }
 
 func (c *Client) formatDate(t time.Time) string {
