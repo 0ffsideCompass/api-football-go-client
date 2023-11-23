@@ -9,8 +9,11 @@ import (
 	"time"
 )
 
+var (
+	domain = "https://v3.football.api-sports.io/"
+)
+
 const (
-	domain     = "https://v3.football.api-sports.io/"
 	authKey    = "X-RapidAPI-Key"
 	hostKey    = "X-RapidAPI-Host"
 	hostVal    = "api-football-v1.p.rapidapi.com"
@@ -28,8 +31,22 @@ type Client struct {
 	client HttpClient
 }
 
-// NewClient creates a new client for the api-football service
+// New creates a new client for the api-football service
 func New(key string, client HttpClient) (*Client, error) {
+	if key == "" {
+		return nil, errors.New("missing key")
+	}
+	if client == nil {
+		return nil, errors.New("missing http client")
+	}
+	return &Client{
+		key:    key,
+		Domain: domain,
+		client: client,
+	}, nil
+}
+
+func NewWithDomain(key, domain string, client HttpClient) (*Client, error) {
 	if key == "" {
 		return nil, errors.New("missing key")
 	}
