@@ -162,7 +162,7 @@ func (c *Client) Fixture(
 		return nil, err
 	}
 
-	endpointURL := fmt.Sprintf("%s/%s", c.Domain, fixtureEndpoint)
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureEndpoint)
 
 	body, err := c.get(
 		c.buildURL(
