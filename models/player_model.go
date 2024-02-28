@@ -206,8 +206,8 @@ type PlayersTopResponse struct {
 				Bench int `json:"bench"`
 			} `json:"substitutes"`
 			Shots struct {
-				Total interface{} `json:"total"`
-				On    interface{} `json:"on"`
+				Total int `json:"total"`
+				On    int `json:"on"`
 			} `json:"shots"`
 			Goals struct {
 				Total    int         `json:"total"`
