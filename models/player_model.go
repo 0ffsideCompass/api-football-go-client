@@ -56,13 +56,13 @@ type PlayersResponse struct {
 				Season  int         `json:"season"`
 			} `json:"league"`
 			Games struct {
-				Appearences int         `json:"appearences"`
-				Lineups     int         `json:"lineups"`
-				Minutes     int         `json:"minutes"`
-				Number      interface{} `json:"number"`
-				Position    string      `json:"position"`
-				Rating      interface{} `json:"rating"`
-				Captain     bool        `json:"captain"`
+				Appearences int    `json:"appearences"`
+				Lineups     int    `json:"lineups"`
+				Minutes     int    `json:"minutes"`
+				Number      int    `json:"number"`
+				Position    string `json:"position"`
+				Rating      int    `json:"rating"`
+				Captain     bool   `json:"captain"`
 			} `json:"games"`
 			Substitutes struct {
 				In    int `json:"in"`
@@ -70,24 +70,24 @@ type PlayersResponse struct {
 				Bench int `json:"bench"`
 			} `json:"substitutes"`
 			Shots struct {
-				Total interface{} `json:"total"`
-				On    interface{} `json:"on"`
+				Total int `json:"total"`
+				On    int `json:"on"`
 			} `json:"shots"`
 			Goals struct {
-				Total    int         `json:"total"`
-				Conceded interface{} `json:"conceded"`
-				Assists  interface{} `json:"assists"`
-				Saves    interface{} `json:"saves"`
+				Total    int `json:"total"`
+				Conceded int `json:"conceded"`
+				Assists  int `json:"assists"`
+				Saves    int `json:"saves"`
 			} `json:"goals"`
 			Passes struct {
-				Total    interface{} `json:"total"`
-				Key      interface{} `json:"key"`
-				Accuracy interface{} `json:"accuracy"`
+				Total    int `json:"total"`
+				Key      int `json:"key"`
+				Accuracy int `json:"accuracy"`
 			} `json:"passes"`
 			Tackles struct {
-				Total         interface{} `json:"total"`
-				Blocks        interface{} `json:"blocks"`
-				Interceptions interface{} `json:"interceptions"`
+				Total         int `json:"total"`
+				Blocks        int `json:"blocks"`
+				Interceptions int `json:"interceptions"`
 			} `json:"tackles"`
 			Duels struct {
 				Total interface{} `json:"total"`
@@ -210,15 +210,15 @@ type PlayersTopResponse struct {
 				On    int `json:"on"`
 			} `json:"shots"`
 			Goals struct {
-				Total    int         `json:"total"`
-				Conceded interface{} `json:"conceded"`
-				Assists  interface{} `json:"assists"`
-				Saves    interface{} `json:"saves"`
+				Total    int `json:"total"`
+				Conceded int `json:"conceded"`
+				Assists  int `json:"assists"`
+				Saves    int `json:"saves"`
 			} `json:"goals"`
 			Passes struct {
-				Total    interface{} `json:"total"`
-				Key      interface{} `json:"key"`
-				Accuracy interface{} `json:"accuracy"`
+				Total    int `json:"total"`
+				Key      int `json:"key"`
+				Accuracy int `json:"accuracy"`
 			} `json:"passes"`
 			Tackles struct {
 				Total         interface{} `json:"total"`

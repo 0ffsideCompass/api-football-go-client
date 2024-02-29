@@ -8,12 +8,26 @@ import (
 )
 
 func main() {
-	apiKey := "xxxxxxxxx"
+	//apiKey := "xxxxxxxxx"
 
-	client, err := client.New(apiKey, &http.Client{})
+	//client, err := client.New(apiKey, &http.Client{})
+	//if err != nil {
+	//		panic(err)
+	//}
+
+	cl, err := client.NewWithDomain(
+		"4393126f4amshe521f523d3a9035p1acfd0jsnc2a0f68cf6b5",
+		"https://api-football-v1.p.rapidapi.com/v3/",
+		&http.Client{},
+	)
+
 	if err != nil {
 		panic(err)
 	}
+
+	x, _ := cl.Search("Arsenl", client.Team)
+
+	fmt.Println(string(x))
 
 	// Get all fixtures for a given date and league
 	//_, err = client.FixtureByDateAndLeague(
@@ -57,12 +71,12 @@ func main() {
 	fmt.Println(vanues)
 	*/
 
-	queryParameters := make(map[string]interface{})
-	queryParameters["season"] = 2023
-	queryParameters["league"] = 39
-	vanues, err := client.Standings(queryParameters)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	fmt.Println(vanues)
+	//queryParameters := make(map[string]interface{})
+	//queryParameters["season"] = 2023
+	//queryParameters["league"] = 39
+	//vanues, err := cl.Standings(queryParameters)
+	//if err != nil {
+	//		fmt.Println(err.Error())
+	//	}
+	//	fmt.Println(vanues)
 }
