@@ -152,8 +152,8 @@ type FixturesResponse struct {
 				Logo string `json:"logo"`
 			} `json:"team"`
 			Statistics []struct {
-				Type  string `json:"type"`
-				Value int    `json:"value"`
+				Type  string      `json:"type"`
+				Value interface{} `json:"value"`
 			} `json:"statistics"`
 		} `json:"statistics"`
 		Players []struct {
