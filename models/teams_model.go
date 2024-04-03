@@ -125,8 +125,8 @@ type TeamsStatisticsResponse struct {
 						Percentage string `json:"percentage"`
 					} `json:"91-105"`
 					One06120 struct {
-						Total      interface{} `json:"total"`
-						Percentage interface{} `json:"percentage"`
+						Total      int    `json:"total"`
+						Percentage string `json:"percentage"`
 					} `json:"106-120"`
 				} `json:"minute"`
 			} `json:"for"`
@@ -171,8 +171,8 @@ type TeamsStatisticsResponse struct {
 						Percentage string `json:"percentage"`
 					} `json:"91-105"`
 					One06120 struct {
-						Total      interface{} `json:"total"`
-						Percentage interface{} `json:"percentage"`
+						Total      int    `json:"total"`
+						Percentage string `json:"percentage"`
 					} `json:"106-120"`
 				} `json:"minute"`
 			} `json:"against"`
