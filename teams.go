@@ -79,11 +79,6 @@ func (c *Client) Teams(
 func (c *Client) TeamsStatistics(
 	params map[string]interface{},
 ) (*models.TeamsStatisticsResponse, error) {
-	// Validate the parameters
-	if err := validateTeamsStatisticsParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, teamsStatisticsEndpoint)
 	body, err := c.get(
 		c.buildURL(

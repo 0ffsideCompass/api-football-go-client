@@ -35,11 +35,6 @@ func (c *Client) FixturesLineups(
 	params map[string]interface{},
 ) (*models.FixturesLineupsResponse, error) {
 
-	// Validate the parameters
-	if err := validateFixturesEventsLineupsParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturesEventsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -74,12 +69,6 @@ func (c *Client) FixturesLineups(
 func (c *Client) FixturesEvents(
 	params map[string]interface{},
 ) (*models.FixturesEventsResponse, error) {
-
-	// Validate the parameters
-	if err := validateFixturesEventsLineupsParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturesEventsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -156,12 +145,6 @@ func (c *Client) FixturesEvents(
 func (c *Client) Fixture(
 	params map[string]interface{},
 ) (*models.FixturesResponse, error) {
-
-	// Validate the parameters
-	if err := validateFixtureParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureEndpoint)
 
 	body, err := c.get(
@@ -274,12 +257,6 @@ func (c *Client) FixtureByDateAndLeague(
 func (c *Client) FixtureStatistics(
 	params map[string]interface{},
 ) (*models.FixturesStatisticsResponse, error) {
-
-	// Validate the parameters
-	if err := validateFixtureStatisticsPlayerParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureStatisticsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -312,11 +289,6 @@ func (c *Client) FixtureStatistics(
 func (c *Client) FixturesPlayer(
 	params map[string]interface{},
 ) (*models.FixturesPlayersResponse, error) {
-	// Validate the parameters
-	if err := validateFixtureStatisticsPlayerParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturePlayerEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -340,12 +312,6 @@ func (c *Client) FixturesPlayer(
 }
 
 func validateFixtureParams(params map[string]interface{}) error {
-
-	// Validate ID
-	if id, exists := params["id"].(int); exists && id < 1 {
-		return errors.New("invalid id parameter")
-	}
-
 	// Validate IDs
 	if ids, exists := params["ids"].(string); exists {
 		idList := strings.Split(ids, "-")
