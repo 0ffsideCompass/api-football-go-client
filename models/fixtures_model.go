@@ -68,16 +68,16 @@ type FixturesResponse struct {
 		} `json:"league"`
 		Teams struct {
 			Home struct {
-				ID     int         `json:"id"`
-				Name   string      `json:"name"`
-				Logo   string      `json:"logo"`
-				Winner interface{} `json:"winner"`
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
 			} `json:"home"`
 			Away struct {
-				ID     int         `json:"id"`
-				Name   string      `json:"name"`
-				Logo   string      `json:"logo"`
-				Winner interface{} `json:"winner"`
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Logo   string `json:"logo"`
+				Winner bool   `json:"winner"`
 			} `json:"away"`
 		} `json:"teams"`
 		Goals struct {
