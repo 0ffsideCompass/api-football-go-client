@@ -18,9 +18,9 @@ type LeaguesResponse struct {
 			Logo string `json:"logo"`
 		} `json:"league"`
 		Country struct {
-			Name string      `json:"name"`
-			Code interface{} `json:"code"`
-			Flag interface{} `json:"flag"`
+			Name string `json:"name"`
+			Code string `json:"code"`
+			Flag string `json:"flag"`
 		} `json:"country"`
 		Seasons []struct {
 			Year     int    `json:"year"`
