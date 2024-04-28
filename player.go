@@ -2,9 +2,7 @@ package client
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
-	"unicode/utf8"
 
 	"github.com/0ffsideCompass/api-football-go-client/models"
 )
@@ -27,7 +25,6 @@ const (
 func (c *Client) PlayersSeasons(
 	params map[string]interface{},
 ) (*models.PlayersSeasonsResponse, error) {
-
 	// Validate the parameters
 	if _, hasPlayer := params["player"]; !hasPlayer {
 		return nil, fmt.Errorf("at least one of 'coach' or 'player' must be provided")
@@ -81,12 +78,6 @@ func (c *Client) PlayersSeasons(
 func (c *Client) Players(
 	params map[string]interface{},
 ) (*models.PlayersResponse, error) {
-
-	// Validate the parameters
-	if err := validatePlayersParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -121,7 +112,6 @@ func (c *Client) Players(
 func (c *Client) PlayersSquads(
 	params map[string]interface{},
 ) (*models.PlayersSquadsResponse, error) {
-
 	val, ok := params["team"].(int)
 	if !ok {
 		return nil, fmt.Errorf("team must exist")
@@ -173,12 +163,6 @@ func (c *Client) PlayersSquads(
 func (c *Client) PlayersTopScorers(
 	params map[string]interface{},
 ) (*models.PlayersTopResponse, error) {
-
-	// Validate the parameters
-	if err := validateTopParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopScorersEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -212,12 +196,6 @@ func (c *Client) PlayersTopScorers(
 func (c *Client) PlayersTopAssists(
 	params map[string]interface{},
 ) (*models.PlayersTopResponse, error) {
-
-	// Validate the parameters
-	if err := validateTopParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopAssistsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -251,12 +229,6 @@ func (c *Client) PlayersTopAssists(
 func (c *Client) PlayersTopYellowCards(
 	params map[string]interface{},
 ) (*models.PlayersTopResponse, error) {
-
-	// Validate the parameters
-	if err := validateTopParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopYellowCardsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -290,12 +262,6 @@ func (c *Client) PlayersTopYellowCards(
 func (c *Client) PlayersTopRedCards(
 	params map[string]interface{},
 ) (*models.PlayersTopResponse, error) {
-
-	// Validate the parameters
-	if err := validateTopParams(params); err != nil {
-		return nil, err
-	}
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopRedCardsEndpoint)
 	body, err := c.get(
 		c.buildURL(
@@ -317,70 +283,4 @@ func (c *Client) PlayersTopRedCards(
 	}
 
 	return &resp, nil
-}
-
-func validatePlayersParams(params map[string]interface{}) error {
-	// Check 'id'
-	id, idExists := params["id"].(int)
-	if idExists && id < 1 {
-		return errors.New("invalid player id parameter")
-	}
-
-	// Check 'team'
-	team, teamExists := params["team"].(int)
-	if teamExists && team < 1 {
-		return errors.New("invalid team parameter")
-	}
-
-	// Check 'season'
-	if season, seasonExists := params["season"].(int); seasonExists {
-		if len(fmt.Sprintf("%d", season)) != 4 {
-			return errors.New("season should be 4 characters long")
-		}
-		if !idExists && !teamExists {
-			_, leagueExists := params["league"].(int)
-			if !leagueExists {
-				return errors.New("for 'season', one of the fields Id, League, or Team should be present")
-			}
-		}
-	}
-
-	// Check 'search'
-	if search, searchExists := params["search"].(string); searchExists {
-		if utf8.RuneCountInString(search) < 4 {
-			return errors.New("search parameter should be 4 characters or more")
-		}
-		if !teamExists {
-			_, leagueExists := params["league"].(int)
-			if !leagueExists {
-				return errors.New("for 'search', one of the fields League or Team should be present")
-			}
-		}
-	}
-
-	// Check 'page' (optional, just ensure it's a positive integer if exists)
-	if page, pageExists := params["page"].(int); pageExists && page < 1 {
-		return errors.New("invalid page parameter")
-	}
-
-	return nil
-}
-
-func validateTopParams(params map[string]interface{}) error {
-	// Check 'league'
-	league, leagueExists := params["league"].(int)
-	if !leagueExists || league < 1 {
-		return errors.New("league parameter is required and should be a positive integer")
-	}
-
-	// Check 'season'
-	if season, seasonExists := params["season"].(int); seasonExists {
-		if len(fmt.Sprintf("%d", season)) != 4 {
-			return errors.New("season should be 4 characters long")
-		}
-	} else {
-		return errors.New("season parameter is required")
-	}
-
-	return nil
 }
