@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/github.com/0ffsideCompass/api-football-go-client)](https://github.com/0ffsideCompass/api-football-go-client)
+[![Go Report Card](https://goreportcard.com/badge/github.com/0ffsideCompass/api-football-go-client)](https://goreportcard.com/report/0ffsideCompass/api-football-go-client)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GoDoc](https://pkg.go.dev/badge/github.com/0ffsideCompass/api-football-go-client.svg)](https://pkg.go.dev/github.com/0ffsideCompass/api-football-go-client)
 
