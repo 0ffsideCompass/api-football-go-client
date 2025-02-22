@@ -20,18 +20,22 @@ const (
 	dateFormat = "2006-01-02"
 )
 
+// HttpClient is an interface that abstracts the http.Client's Do method,
+// allowing for easier testing and customization.
 type HttpClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-// Client is a struct that holds the key for the API
+// Client represents a client for the API-Football service.
+// It holds the API key, the base domain URL, and the underlying HTTP client used to execute requests.
 type Client struct {
 	key    string
 	Domain string
 	client HttpClient
 }
 
-// New creates a new client for the api-football service
+// New creates a new Client instance for the API-Football service using the default domain.
+// It returns an error if the API key is missing or the provided HTTP client is nil.
 func New(key string, client HttpClient) (*Client, error) {
 	if key == "" {
 		return nil, errors.New("missing key")
@@ -46,6 +50,8 @@ func New(key string, client HttpClient) (*Client, error) {
 	}, nil
 }
 
+// NewWithDomain creates a new Client instance with a custom domain.
+// It returns an error if the API key is missing or the provided HTTP client is nil.
 func NewWithDomain(key, domain string, client HttpClient) (*Client, error) {
 	if key == "" {
 		return nil, errors.New("missing key")
