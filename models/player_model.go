@@ -61,7 +61,7 @@ type PlayersResponse struct {
 				Minutes     int    `json:"minutes"`
 				Number      int    `json:"number"`
 				Position    string `json:"position"`
-				Rating      int    `json:"rating"`
+				Rating      string `json:"rating"`
 				Captain     bool   `json:"captain"`
 			} `json:"games"`
 			Substitutes struct {
@@ -90,17 +90,17 @@ type PlayersResponse struct {
 				Interceptions int `json:"interceptions"`
 			} `json:"tackles"`
 			Duels struct {
-				Total interface{} `json:"total"`
-				Won   interface{} `json:"won"`
+				Total int `json:"total"`
+				Won   int `json:"won"`
 			} `json:"duels"`
 			Dribbles struct {
-				Attempts interface{} `json:"attempts"`
-				Success  interface{} `json:"success"`
-				Past     interface{} `json:"past"`
+				Attempts int `json:"attempts"`
+				Success  int `json:"success"`
+				Past     int `json:"past"`
 			} `json:"dribbles"`
 			Fouls struct {
-				Drawn     interface{} `json:"drawn"`
-				Committed interface{} `json:"committed"`
+				Drawn     int `json:"drawn"`
+				Committed int `json:"committed"`
 			} `json:"fouls"`
 			Cards struct {
 				Yellow    int `json:"yellow"`
@@ -108,11 +108,11 @@ type PlayersResponse struct {
 				Red       int `json:"red"`
 			} `json:"cards"`
 			Penalty struct {
-				Won      interface{} `json:"won"`
-				Commited interface{} `json:"commited"`
-				Scored   interface{} `json:"scored"`
-				Missed   interface{} `json:"missed"`
-				Saved    interface{} `json:"saved"`
+				Won      int `json:"won"`
+				Commited int `json:"commited"`
+				Scored   int `json:"scored"`
+				Missed   int `json:"missed"`
+				Saved    int `json:"saved"`
 			} `json:"penalty"`
 		} `json:"statistics"`
 	} `json:"response"`
@@ -192,13 +192,13 @@ type PlayersTopResponse struct {
 				Season  int    `json:"season"`
 			} `json:"league"`
 			Games struct {
-				Appearences int         `json:"appearences"`
-				Lineups     int         `json:"lineups"`
-				Minutes     int         `json:"minutes"`
-				Number      interface{} `json:"number"`
-				Position    string      `json:"position"`
-				Rating      interface{} `json:"rating"`
-				Captain     bool        `json:"captain"`
+				Appearences int    `json:"appearences"`
+				Lineups     int    `json:"lineups"`
+				Minutes     int    `json:"minutes"`
+				Number      int    `json:"number"`
+				Position    string `json:"position"`
+				Rating      string `json:"rating"`
+				Captain     bool   `json:"captain"`
 			} `json:"games"`
 			Substitutes struct {
 				In    int `json:"in"`
@@ -221,22 +221,22 @@ type PlayersTopResponse struct {
 				Accuracy int `json:"accuracy"`
 			} `json:"passes"`
 			Tackles struct {
-				Total         interface{} `json:"total"`
-				Blocks        interface{} `json:"blocks"`
-				Interceptions interface{} `json:"interceptions"`
+				Total         int `json:"total"`
+				Blocks        int `json:"blocks"`
+				Interceptions int `json:"interceptions"`
 			} `json:"tackles"`
 			Duels struct {
-				Total interface{} `json:"total"`
-				Won   interface{} `json:"won"`
+				Total int `json:"total"`
+				Won   int `json:"won"`
 			} `json:"duels"`
 			Dribbles struct {
-				Attempts interface{} `json:"attempts"`
-				Success  interface{} `json:"success"`
-				Past     interface{} `json:"past"`
+				Attempts int `json:"attempts"`
+				Success  int `json:"success"`
+				Past     int `json:"past"`
 			} `json:"dribbles"`
 			Fouls struct {
-				Drawn     interface{} `json:"drawn"`
-				Committed interface{} `json:"committed"`
+				Drawn     int `json:"drawn"`
+				Committed int `json:"committed"`
 			} `json:"fouls"`
 			Cards struct {
 				Yellow    int `json:"yellow"`
@@ -244,11 +244,11 @@ type PlayersTopResponse struct {
 				Red       int `json:"red"`
 			} `json:"cards"`
 			Penalty struct {
-				Won      interface{} `json:"won"`
-				Commited interface{} `json:"commited"`
-				Scored   interface{} `json:"scored"`
-				Missed   interface{} `json:"missed"`
-				Saved    interface{} `json:"saved"`
+				Won      int `json:"won"`
+				Commited int `json:"commited"`
+				Scored   int `json:"scored"`
+				Missed   int `json:"missed"`
+				Saved    int `json:"saved"`
 			} `json:"penalty"`
 		} `json:"statistics"`
 	} `json:"response"`
