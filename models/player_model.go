@@ -46,7 +46,7 @@ type PlayersResponse struct {
 				Name    string      `json:"name"`
 				Country string      `json:"country"`
 				Logo    string      `json:"logo"`
-				Flag    interface{} `json:"flag"`
+				Flag    string `json:"flag"`
 				Season  int         `json:"season"`
 			} `json:"league"`
 			Games struct {
@@ -156,12 +156,12 @@ type PlayersTopResponse struct {
 			Age       int    `json:"age"`
 			Birth     struct {
 				Date    string      `json:"date"`
-				Place   interface{} `json:"place"`
+				Place   string `json:"place"`
 				Country string      `json:"country"`
 			} `json:"birth"`
 			Nationality string      `json:"nationality"`
-			Height      interface{} `json:"height"`
-			Weight      interface{} `json:"weight"`
+			Height      string `json:"height"`
+			Weight      string `json:"weight"`
 			Injured     bool        `json:"injured"`
 			Photo       string      `json:"photo"`
 		} `json:"player"`

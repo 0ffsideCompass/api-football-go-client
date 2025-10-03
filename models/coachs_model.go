@@ -19,8 +19,8 @@ type Coachs struct {
 			Country string `json:"country"`
 		} `json:"birth"`
 		Nationality string      `json:"nationality"`
-		Height      interface{} `json:"height"`
-		Weight      interface{} `json:"weight"`
+		Height      string `json:"height"`
+		Weight      string `json:"weight"`
 		Photo       string      `json:"photo"`
 		Team        struct {
 			ID   int    `json:"id"`

@@ -34,7 +34,7 @@ type InjuriesResponse struct {
 			Name    string      `json:"name"`
 			Country string      `json:"country"`
 			Logo    string      `json:"logo"`
-			Flag    interface{} `json:"flag"`
+			Flag    string `json:"flag"`
 		} `json:"league"`
 	} `json:"response"`
 }
