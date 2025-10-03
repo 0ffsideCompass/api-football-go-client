@@ -6,8 +6,8 @@ type Coachs struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		ID        int    `json:"id"`
 		Name      string `json:"name"`
 		Firstname string `json:"firstname"`
@@ -18,10 +18,10 @@ type Coachs struct {
 			Place   string `json:"place"`
 			Country string `json:"country"`
 		} `json:"birth"`
-		Nationality string      `json:"nationality"`
+		Nationality string `json:"nationality"`
 		Height      string `json:"height"`
 		Weight      string `json:"weight"`
-		Photo       string      `json:"photo"`
+		Photo       string `json:"photo"`
 		Team        struct {
 			ID   int    `json:"id"`
 			Name string `json:"name"`

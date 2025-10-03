@@ -13,13 +13,13 @@ import (
 
 func TestSearch(t *testing.T) {
 	tests := []struct {
-		name           string
-		query          string
-		searchType     client.Type
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		query         string
+		searchType    client.Type
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:       "successful search for teams",

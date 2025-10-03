@@ -13,12 +13,12 @@ import (
 
 func TestInjuries(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful injuries request",
@@ -72,12 +72,12 @@ func TestInjuries(t *testing.T) {
 
 func TestCoachs(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful coaches request",
@@ -131,12 +131,12 @@ func TestCoachs(t *testing.T) {
 
 func TestSidelined(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful sidelined request",
@@ -190,12 +190,12 @@ func TestSidelined(t *testing.T) {
 
 func TestTransfers(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful transfers request",
@@ -249,12 +249,12 @@ func TestTransfers(t *testing.T) {
 
 func TestTrophies(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful trophies request",
@@ -308,12 +308,12 @@ func TestTrophies(t *testing.T) {
 
 func TestVenues(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful venues request",

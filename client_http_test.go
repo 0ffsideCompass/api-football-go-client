@@ -26,11 +26,11 @@ func (m *MockHTTPClient) Do(req *http.Request) (*http.Response, error) {
 
 func TestHTTPStatusValidation(t *testing.T) {
 	tests := []struct {
-		name           string
-		statusCode     int
-		responseBody   string
-		expectError    bool
-		errorContains  string
+		name          string
+		statusCode    int
+		responseBody  string
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:         "should succeed with 200 OK",

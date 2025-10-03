@@ -13,12 +13,12 @@ import (
 
 func TestPlayersSeasons(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful players seasons request",
@@ -86,12 +86,12 @@ func TestPlayersSeasons(t *testing.T) {
 
 func TestPlayers(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful players request",
@@ -159,12 +159,12 @@ func TestPlayers(t *testing.T) {
 
 func TestPlayersSquads(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful players squads request",
@@ -234,12 +234,12 @@ func TestPlayersSquads(t *testing.T) {
 
 func TestPlayersTopScorers(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful top scorers request",
@@ -293,12 +293,12 @@ func TestPlayersTopScorers(t *testing.T) {
 
 func TestPlayersTopAssists(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful top assists request",
@@ -352,12 +352,12 @@ func TestPlayersTopAssists(t *testing.T) {
 
 func TestPlayersTopCards(t *testing.T) {
 	yellowCardTests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful top yellow cards request",
@@ -409,12 +409,12 @@ func TestPlayersTopCards(t *testing.T) {
 	}
 
 	redCardTests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful top red cards request",

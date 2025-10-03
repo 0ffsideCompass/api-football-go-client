@@ -13,12 +13,12 @@ import (
 
 func TestLeagues(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful leagues request",

@@ -14,12 +14,12 @@ import (
 
 func TestFixturesLineups(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful fixtures lineups request",
@@ -81,12 +81,12 @@ func TestFixturesLineups(t *testing.T) {
 
 func TestFixturesEvents(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful fixtures events request",
@@ -140,12 +140,12 @@ func TestFixturesEvents(t *testing.T) {
 
 func TestFixture(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful fixture request",
@@ -213,15 +213,15 @@ func TestFixture(t *testing.T) {
 
 func TestFixtureHeadToHead(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
-			name: "successful head to head request",
+			name:   "successful head to head request",
 			params: map[string]interface{}{"h2h": "33-34"},
 			responseBody: `{
 				"response": [
@@ -275,15 +275,15 @@ func TestFixtureByDateAndLeague(t *testing.T) {
 	toDate := time.Date(2023, 1, 16, 0, 0, 0, 0, time.UTC)
 
 	tests := []struct {
-		name           string
-		leagueID       int
-		season         int
-		fromDate       time.Time
-		toDate         time.Time
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		leagueID      int
+		season        int
+		fromDate      time.Time
+		toDate        time.Time
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:     "successful fixture by date and league request",
@@ -343,12 +343,12 @@ func TestFixtureByDateAndLeague(t *testing.T) {
 
 func TestFixtureStatistics(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful fixture statistics request",
@@ -402,12 +402,12 @@ func TestFixtureStatistics(t *testing.T) {
 
 func TestFixturesPlayer(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful fixtures player request",

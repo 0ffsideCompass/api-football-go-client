@@ -7,8 +7,8 @@ type StandingsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		League struct {
 			ID        int    `json:"id"`
 			Name      string `json:"name"`

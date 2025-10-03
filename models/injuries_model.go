@@ -8,8 +8,8 @@ type InjuriesResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Player struct {
 			ID     int    `json:"id"`
 			Name   string `json:"name"`
@@ -29,11 +29,11 @@ type InjuriesResponse struct {
 			Timestamp int       `json:"timestamp"`
 		} `json:"fixture"`
 		League struct {
-			ID      int         `json:"id"`
-			Season  int         `json:"season"`
-			Name    string      `json:"name"`
-			Country string      `json:"country"`
-			Logo    string      `json:"logo"`
+			ID      int    `json:"id"`
+			Season  int    `json:"season"`
+			Name    string `json:"name"`
+			Country string `json:"country"`
+			Logo    string `json:"logo"`
 			Flag    string `json:"flag"`
 		} `json:"league"`
 	} `json:"response"`

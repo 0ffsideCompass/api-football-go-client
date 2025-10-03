@@ -37,14 +37,14 @@ func (c *Client) Venues(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting fixtures: %w", err)
+		return nil, fmt.Errorf("error getting venues: %w", err)
 	}
 
 	var resp models.VenuesResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"error unmarshalling fixtures response: %w",
+			"error unmarshalling venues response: %w",
 			err,
 		)
 	}

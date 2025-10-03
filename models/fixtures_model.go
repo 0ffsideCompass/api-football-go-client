@@ -8,8 +8,8 @@ type FixturesStatisticsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Team struct {
 			ID   int    `json:"id"`
 			Name string `json:"name"`
@@ -28,8 +28,8 @@ type FixturesResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Fixture struct {
 			ID        int       `json:"id"`
 			Referee   string    `json:"referee"`
@@ -126,10 +126,10 @@ type FixturesResponse struct {
 			} `json:"startXI"`
 			Substitutes []struct {
 				Player struct {
-					ID     int         `json:"id"`
-					Name   string      `json:"name"`
-					Number int         `json:"number"`
-					Pos    string      `json:"pos"`
+					ID     int    `json:"id"`
+					Name   string `json:"name"`
+					Number int    `json:"number"`
+					Pos    string `json:"pos"`
 					Grid   string `json:"grid"`
 				} `json:"player"`
 			} `json:"substitutes"`
@@ -146,7 +146,7 @@ type FixturesResponse struct {
 				Logo string `json:"logo"`
 			} `json:"team"`
 			Statistics []struct {
-				Type  string      `json:"type"`
+				Type  string `json:"type"`
 				Value string `json:"value"`
 			} `json:"statistics"`
 		} `json:"statistics"`
@@ -179,14 +179,14 @@ type FixturesResponse struct {
 					} `json:"shots"`
 					Goals struct {
 						Total    int `json:"total"`
-						Conceded int         `json:"conceded"`
+						Conceded int `json:"conceded"`
 						Assists  int `json:"assists"`
-						Saves    int         `json:"saves"`
+						Saves    int `json:"saves"`
 					} `json:"goals"`
 					Passes struct {
-						Total    int         `json:"total"`
-						Key      int `json:"key"`
-						Accuracy string      `json:"accuracy"`
+						Total    int    `json:"total"`
+						Key      int    `json:"key"`
+						Accuracy string `json:"accuracy"`
 					} `json:"passes"`
 					Tackles struct {
 						Total         int `json:"total"`
@@ -212,17 +212,17 @@ type FixturesResponse struct {
 					} `json:"cards"`
 					Penalty struct {
 						Won      int `json:"won"`
-						Commited int `json:"commited"`
-						Scored   int         `json:"scored"`
-						Missed   int         `json:"missed"`
-						Saved    int         `json:"saved"`
+						Committed int `json:"commited"`
+						Scored   int `json:"scored"`
+						Missed   int `json:"missed"`
+						Saved    int `json:"saved"`
 					} `json:"penalty"`
 				} `json:"statistics"`
 			} `json:"players"`
 		} `json:"players"`
 		Events []struct {
 			Time struct {
-				Elapsed int         `json:"elapsed"`
+				Elapsed int    `json:"elapsed"`
 				Extra   string `json:"extra"`
 			} `json:"time"`
 			Team struct {
@@ -235,7 +235,7 @@ type FixturesResponse struct {
 				Name string `json:"name"`
 			} `json:"player"`
 			Assist struct {
-				ID   int `json:"id"`
+				ID   int    `json:"id"`
 				Name string `json:"name"`
 			} `json:"assist"`
 			Type     string `json:"type"`
@@ -251,10 +251,10 @@ type FixturesEventsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Time struct {
-			Elapsed int         `json:"elapsed"`
+			Elapsed int    `json:"elapsed"`
 			Extra   string `json:"extra"`
 		} `json:"time"`
 		Team struct {
@@ -267,11 +267,11 @@ type FixturesEventsResponse struct {
 			Name string `json:"name"`
 		} `json:"player"`
 		Assist struct {
-			ID   int `json:"id"`
+			ID   int    `json:"id"`
 			Name string `json:"name"`
 		} `json:"assist"`
-		Type     string      `json:"type"`
-		Detail   string      `json:"detail"`
+		Type     string `json:"type"`
+		Detail   string `json:"detail"`
 		Comments string `json:"comments"`
 	} `json:"response"`
 }
@@ -282,12 +282,12 @@ type FixturesLineupsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Team struct {
-			ID     int         `json:"id"`
-			Name   string      `json:"name"`
-			Logo   string      `json:"logo"`
+			ID     int    `json:"id"`
+			Name   string `json:"name"`
+			Logo   string `json:"logo"`
 			Colors string `json:"colors"`
 		} `json:"team"`
 		Coach struct {
@@ -307,10 +307,10 @@ type FixturesLineupsResponse struct {
 		} `json:"startXI"`
 		Substitutes []struct {
 			Player struct {
-				ID     int         `json:"id"`
-				Name   string      `json:"name"`
-				Number int         `json:"number"`
-				Pos    string      `json:"pos"`
+				ID     int    `json:"id"`
+				Name   string `json:"name"`
+				Number int    `json:"number"`
+				Pos    string `json:"pos"`
 				Grid   string `json:"grid"`
 			} `json:"player"`
 		} `json:"substitutes"`
@@ -323,8 +323,8 @@ type FixturesPlayersResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Team struct {
 			ID     int       `json:"id"`
 			Name   string    `json:"name"`
@@ -353,9 +353,9 @@ type FixturesPlayersResponse struct {
 				} `json:"shots"`
 				Goals struct {
 					Total    int `json:"total"`
-					Conceded int         `json:"conceded"`
+					Conceded int `json:"conceded"`
 					Assists  int `json:"assists"`
-					Saves    int         `json:"saves"`
+					Saves    int `json:"saves"`
 				} `json:"goals"`
 				Passes struct {
 					Total    int    `json:"total"`
@@ -364,16 +364,16 @@ type FixturesPlayersResponse struct {
 				} `json:"passes"`
 				Tackles struct {
 					Total         int `json:"total"`
-					Blocks        int         `json:"blocks"`
-					Interceptions int         `json:"interceptions"`
+					Blocks        int `json:"blocks"`
+					Interceptions int `json:"interceptions"`
 				} `json:"tackles"`
 				Duels struct {
 					Total int `json:"total"`
 					Won   int `json:"won"`
 				} `json:"duels"`
 				Dribbles struct {
-					Attempts int         `json:"attempts"`
-					Success  int         `json:"success"`
+					Attempts int `json:"attempts"`
+					Success  int `json:"success"`
 					Past     int `json:"past"`
 				} `json:"dribbles"`
 				Fouls struct {
@@ -386,10 +386,10 @@ type FixturesPlayersResponse struct {
 				} `json:"cards"`
 				Penalty struct {
 					Won      int `json:"won"`
-					Commited int `json:"commited"`
-					Scored   int         `json:"scored"`
-					Missed   int         `json:"missed"`
-					Saved    int         `json:"saved"`
+					Committed int `json:"commited"`
+					Scored   int `json:"scored"`
+					Missed   int `json:"missed"`
+					Saved    int `json:"saved"`
 				} `json:"penalty"`
 			} `json:"statistics"`
 		} `json:"players"`

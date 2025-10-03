@@ -7,9 +7,9 @@ type FixtureHeadToHeadResp struct {
 	Parameters struct {
 		H2H string `json:"h2h"`
 	} `json:"parameters"`
-	Errors  []any `json:"errors"`
-	Results int   `json:"results"`
-	Paging  Pagination `json:"paging"`
+	Errors   []any         `json:"errors"`
+	Results  int           `json:"results"`
+	Paging   Pagination    `json:"paging"`
 	Response []FixtureResp `json:"response"`
 }
 
@@ -90,9 +90,9 @@ type FixturesByDateResp struct {
 		Season string `json:"season"`
 		To     string `json:"to"`
 	} `json:"parameters"`
-	Errors  map[string]interface{} `json:"errors"`
-	Results int                    `json:"results"`
-	Paging  Pagination `json:"paging"`
+	Errors   interface{} `json:"errors"`
+	Results  int         `json:"results"`
+	Paging   Pagination  `json:"paging"`
 	Response []struct {
 		Fixture struct {
 			ID        int       `json:"id"`

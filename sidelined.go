@@ -62,12 +62,14 @@ func validateSidelinedParams(params map[string]interface{}) error {
 
 	for key, value := range params {
 		if key == "coach" || key == "player" {
-			val, ok := value.(float64)
-			if !ok {
-				return fmt.Errorf("%s must be an integer", key)
-			}
-
-			if val != float64(int(val)) {
+			switch v := value.(type) {
+			case int:
+				// int is valid
+			case float64:
+				if v != float64(int(v)) {
+					return fmt.Errorf("%s must be an integer", key)
+				}
+			default:
 				return fmt.Errorf("%s must be an integer", key)
 			}
 		}

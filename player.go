@@ -27,7 +27,7 @@ func (c *Client) PlayersSeasons(
 ) (*models.PlayersSeasonsResponse, error) {
 	// Validate the parameters
 	if _, hasPlayer := params["player"]; !hasPlayer {
-		return nil, fmt.Errorf("at least one of 'coach' or 'player' must be provided")
+		return nil, fmt.Errorf("player must exist and be an integer")
 	}
 
 	_, ok := params["player"].(int)

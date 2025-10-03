@@ -6,8 +6,8 @@ type SidelinedResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     Pagination `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Type  string `json:"type"`
 		Start string `json:"start"`
 		End   string `json:"end"`

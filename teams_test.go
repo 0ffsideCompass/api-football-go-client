@@ -13,12 +13,12 @@ import (
 
 func TestTeams(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful teams request",
@@ -94,12 +94,12 @@ func TestTeams(t *testing.T) {
 
 func TestTeamsStatistics(t *testing.T) {
 	tests := []struct {
-		name           string
-		params         map[string]interface{}
-		responseBody   string
-		statusCode     int
-		expectError    bool
-		errorContains  string
+		name          string
+		params        map[string]interface{}
+		responseBody  string
+		statusCode    int
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:   "successful team statistics request",

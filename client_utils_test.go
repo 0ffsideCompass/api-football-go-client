@@ -112,11 +112,11 @@ func TestFormatDate(t *testing.T) {
 
 func TestClientConfiguration(t *testing.T) {
 	tests := []struct {
-		name           string
-		key            string
-		domain         string
-		expectError    bool
-		errorContains  string
+		name          string
+		key           string
+		domain        string
+		expectError   bool
+		errorContains string
 	}{
 		{
 			name:        "successful client creation with default domain",

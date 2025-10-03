@@ -208,7 +208,7 @@ func (c *Client) FixtureHeadToHead(
 	var resp models.FixtureHeadToHeadResp
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error unmarshalling fixtures head to head response: %w", err)
 	}
 	return &resp, nil
 }
@@ -269,7 +269,7 @@ func (c *Client) FixtureStatistics(
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"error unmarshalling fixtures statistics response: %w",
+			"error unmarshalling fixture statistics response: %w",
 			err,
 		)
 	}
