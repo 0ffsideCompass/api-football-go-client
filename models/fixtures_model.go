@@ -211,11 +211,11 @@ type FixturesResponse struct {
 						Red    int `json:"red"`
 					} `json:"cards"`
 					Penalty struct {
-						Won      int `json:"won"`
+						Won       int `json:"won"`
 						Committed int `json:"commited"`
-						Scored   int `json:"scored"`
-						Missed   int `json:"missed"`
-						Saved    int `json:"saved"`
+						Scored    int `json:"scored"`
+						Missed    int `json:"missed"`
+						Saved     int `json:"saved"`
 					} `json:"penalty"`
 				} `json:"statistics"`
 			} `json:"players"`
@@ -385,11 +385,11 @@ type FixturesPlayersResponse struct {
 					Red    int `json:"red"`
 				} `json:"cards"`
 				Penalty struct {
-					Won      int `json:"won"`
+					Won       int `json:"won"`
 					Committed int `json:"commited"`
-					Scored   int `json:"scored"`
-					Missed   int `json:"missed"`
-					Saved    int `json:"saved"`
+					Scored    int `json:"scored"`
+					Missed    int `json:"missed"`
+					Saved     int `json:"saved"`
 				} `json:"penalty"`
 			} `json:"statistics"`
 		} `json:"players"`
