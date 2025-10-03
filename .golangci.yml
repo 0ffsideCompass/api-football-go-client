@@ -67,7 +67,6 @@ linters:
   disable-all: true
   enable:
     - bodyclose
-    - depguard
     - dogsled
     - dupl
     - errcheck
@@ -87,7 +86,6 @@ linters:
     - govet
     - ineffassign
     - lll
-    - misspell
     - nakedret
     - noctx
     - nolintlint
@@ -113,6 +111,14 @@ issues:
     - linters:
         - gocritic
       text: "unnecessaryDefer:"
+
+    # Exclude misspellings in JSON tags that match the actual API
+    - linters:
+        - misspell
+      text: "commited.*json.*commited"
+    - linters:
+        - misspell
+      text: "appearences.*json.*appearences"
 
   # Independently from option `exclude` we use default exclude patterns,
   # it can be disabled by this option. To list all

@@ -1,3 +1,4 @@
+// Package client provides a Go client for the Football API from API-Sports.io.
 package client
 
 import (

@@ -1,3 +1,4 @@
+// Package models contains the data structures for API responses from the football API.
 package models
 
 // MinuteStat represents statistics for a specific minute range
