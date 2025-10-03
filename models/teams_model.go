@@ -6,11 +6,8 @@ type TeamsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
-	Response []struct {
+	Paging     Pagination  `json:"paging"`
+	Response   []struct {
 		Team struct {
 			ID       int    `json:"id"`
 			Name     string `json:"name"`
@@ -40,12 +37,9 @@ type TeamsStatisticsResponse struct {
 		Team   string `json:"team"`
 		League string `json:"league"`
 	} `json:"parameters"`
-	Errors  []interface{} `json:"errors"`
-	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Errors   []interface{} `json:"errors"`
+	Results  int           `json:"results"`
+	Paging   Pagination    `json:"paging"`
 	Response struct {
 		League struct {
 			ID      int    `json:"id"`
@@ -62,119 +56,21 @@ type TeamsStatisticsResponse struct {
 		} `json:"team"`
 		Form     string `json:"form"`
 		Fixtures struct {
-			Played struct {
-				Home  int `json:"home"`
-				Away  int `json:"away"`
-				Total int `json:"total"`
-			} `json:"played"`
-			Wins struct {
-				Home  int `json:"home"`
-				Away  int `json:"away"`
-				Total int `json:"total"`
-			} `json:"wins"`
-			Draws struct {
-				Home  int `json:"home"`
-				Away  int `json:"away"`
-				Total int `json:"total"`
-			} `json:"draws"`
-			Loses struct {
-				Home  int `json:"home"`
-				Away  int `json:"away"`
-				Total int `json:"total"`
-			} `json:"loses"`
+			Played HomeAwayTotal `json:"played"`
+			Wins   HomeAwayTotal `json:"wins"`
+			Draws  HomeAwayTotal `json:"draws"`
+			Loses  HomeAwayTotal `json:"loses"`
 		} `json:"fixtures"`
 		Goals struct {
 			For struct {
-				Total struct {
-					Home  int `json:"home"`
-					Away  int `json:"away"`
-					Total int `json:"total"`
-				} `json:"total"`
-				Average struct {
-					Home  string `json:"home"`
-					Away  string `json:"away"`
-					Total string `json:"total"`
-				} `json:"average"`
-				Minute struct {
-					Zero15 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"0-15"`
-					One630 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"16-30"`
-					Three145 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"31-45"`
-					Four660 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"46-60"`
-					Six175 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"61-75"`
-					Seven690 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"76-90"`
-					Nine1105 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"91-105"`
-					One06120 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"106-120"`
-				} `json:"minute"`
+				Total   HomeAwayTotal   `json:"total"`
+				Average HomeAwayString  `json:"average"`
+				Minute  MinuteBreakdown `json:"minute"`
 			} `json:"for"`
 			Against struct {
-				Total struct {
-					Home  int `json:"home"`
-					Away  int `json:"away"`
-					Total int `json:"total"`
-				} `json:"total"`
-				Average struct {
-					Home  string `json:"home"`
-					Away  string `json:"away"`
-					Total string `json:"total"`
-				} `json:"average"`
-				Minute struct {
-					Zero15 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"0-15"`
-					One630 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"16-30"`
-					Three145 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"31-45"`
-					Four660 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"46-60"`
-					Six175 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"61-75"`
-					Seven690 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"76-90"`
-					Nine1105 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"91-105"`
-					One06120 struct {
-						Total      int    `json:"total"`
-						Percentage string `json:"percentage"`
-					} `json:"106-120"`
-				} `json:"minute"`
+				Total   HomeAwayTotal   `json:"total"`
+				Average HomeAwayString  `json:"average"`
+				Minute  MinuteBreakdown `json:"minute"`
 			} `json:"against"`
 		} `json:"goals"`
 		Biggest struct {
@@ -202,17 +98,9 @@ type TeamsStatisticsResponse struct {
 				} `json:"against"`
 			} `json:"goals"`
 		} `json:"biggest"`
-		CleanSheet struct {
-			Home  int `json:"home"`
-			Away  int `json:"away"`
-			Total int `json:"total"`
-		} `json:"clean_sheet"`
-		FailedToScore struct {
-			Home  int `json:"home"`
-			Away  int `json:"away"`
-			Total int `json:"total"`
-		} `json:"failed_to_score"`
-		Penalty struct {
+		CleanSheet    HomeAwayTotal `json:"clean_sheet"`
+		FailedToScore HomeAwayTotal `json:"failed_to_score"`
+		Penalty       struct {
 			Scored struct {
 				Total      int    `json:"total"`
 				Percentage string `json:"percentage"`
@@ -228,74 +116,8 @@ type TeamsStatisticsResponse struct {
 			Played    int    `json:"played"`
 		} `json:"lineups"`
 		Cards struct {
-			Yellow struct {
-				Zero15 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"0-15"`
-				One630 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"16-30"`
-				Three145 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"31-45"`
-				Four660 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"46-60"`
-				Six175 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"61-75"`
-				Seven690 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"76-90"`
-				Nine1105 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"91-105"`
-				One06120 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"106-120"`
-			} `json:"yellow"`
-			Red struct {
-				Zero15 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"0-15"`
-				One630 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"16-30"`
-				Three145 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"31-45"`
-				Four660 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"46-60"`
-				Six175 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"61-75"`
-				Seven690 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"76-90"`
-				Nine1105 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"91-105"`
-				One06120 struct {
-					Total      int    `json:"total"`
-					Percentage string `json:"percentage"`
-				} `json:"106-120"`
-			} `json:"red"`
+			Yellow MinuteBreakdown `json:"yellow"`
+			Red    MinuteBreakdown `json:"red"`
 		} `json:"cards"`
 	} `json:"response"`
 }

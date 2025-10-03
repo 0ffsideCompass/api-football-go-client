@@ -6,10 +6,7 @@ type VenuesResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging     Pagination `json:"paging"`
 	Response []struct {
 		ID       int    `json:"id"`
 		Name     string `json:"name"`

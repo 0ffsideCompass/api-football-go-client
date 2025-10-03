@@ -6,10 +6,7 @@ type PlayersSeasonsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging     Pagination `json:"paging"`
 	Response []int `json:"response"`
 }
 
@@ -19,10 +16,7 @@ type PlayersResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging     Pagination `json:"paging"`
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`
@@ -124,10 +118,7 @@ type PlayersSquadsResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging     Pagination `json:"paging"`
 	Response []struct {
 		Team struct {
 			ID   int    `json:"id"`
@@ -155,10 +146,7 @@ type PlayersTopResponse struct {
 	} `json:"parameters"`
 	Errors  []interface{} `json:"errors"`
 	Results int           `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging  Pagination `json:"paging"`
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`

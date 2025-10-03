@@ -6,10 +6,7 @@ type TrophiesResponse struct {
 	Parameters interface{} `json:"parameters"`
 	Errors     interface{} `json:"errors"`
 	Results    int         `json:"results"`
-	Paging     struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging     Pagination `json:"paging"`
 	Response []struct {
 		League  string `json:"league"`
 		Country string `json:"country"`

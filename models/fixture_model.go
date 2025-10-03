@@ -9,10 +9,7 @@ type FixtureHeadToHeadResp struct {
 	} `json:"parameters"`
 	Errors  []any `json:"errors"`
 	Results int   `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging  Pagination `json:"paging"`
 	Response []FixtureResp `json:"response"`
 }
 
@@ -95,10 +92,7 @@ type FixturesByDateResp struct {
 	} `json:"parameters"`
 	Errors  map[string]interface{} `json:"errors"`
 	Results int                    `json:"results"`
-	Paging  struct {
-		Current int `json:"current"`
-		Total   int `json:"total"`
-	} `json:"paging"`
+	Paging  Pagination `json:"paging"`
 	Response []struct {
 		Fixture struct {
 			ID        int       `json:"id"`
