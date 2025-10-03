@@ -30,12 +30,9 @@ func (c *Client) PlayersSeasons(
 		return nil, fmt.Errorf("at least one of 'coach' or 'player' must be provided")
 	}
 
-	val, ok := params["player"].(int)
+	_, ok := params["player"].(int)
 	if !ok {
-		return nil, fmt.Errorf("player mustexist")
-	}
-	if val != int(int(val)) {
-		return nil, fmt.Errorf("%d must be an integer", val)
+		return nil, fmt.Errorf("player must exist and be an integer")
 	}
 
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersSeasonsEndpoint)
@@ -112,22 +109,14 @@ func (c *Client) Players(
 func (c *Client) PlayersSquads(
 	params map[string]interface{},
 ) (*models.PlayersSquadsResponse, error) {
-	val, ok := params["team"].(int)
+	_, ok := params["team"].(int)
 	if !ok {
-		return nil, fmt.Errorf("team must exist")
-	} else {
-		if val != int(int(val)) {
-			return nil, fmt.Errorf("%d must be an integer", val)
-		}
+		return nil, fmt.Errorf("team must exist and be an integer")
 	}
 
-	val, ok = params["player"].(int)
+	_, ok = params["player"].(int)
 	if !ok {
-		return nil, fmt.Errorf("player must exist")
-	} else {
-		if val != int(int(val)) {
-			return nil, fmt.Errorf("%d must be an integer", val)
-		}
+		return nil, fmt.Errorf("player must exist and be an integer")
 	}
 
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersSquadsEndpoint)
@@ -204,14 +193,14 @@ func (c *Client) PlayersTopAssists(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting players topscorers: %w", err)
+		return nil, fmt.Errorf("error getting players top assists: %w", err)
 	}
 
 	var resp models.PlayersTopResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"error unmarshalling players topscorers response: %w",
+			"error unmarshalling players top assists response: %w",
 			err,
 		)
 	}
@@ -219,7 +208,7 @@ func (c *Client) PlayersTopAssists(
 	return &resp, nil
 }
 
-// PlayersTopYellowCards returns the top assists for a given league and season
+// PlayersTopYellowCards returns the top yellow cards for a given league and season
 /*
 	- league (Type: integer)(Required)
 	  The ID of the league. Value format: 2
@@ -237,14 +226,14 @@ func (c *Client) PlayersTopYellowCards(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting players topscorers: %w", err)
+		return nil, fmt.Errorf("error getting players top yellow cards: %w", err)
 	}
 
 	var resp models.PlayersTopResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"error unmarshalling players topscorers response: %w",
+			"error unmarshalling players top yellow cards response: %w",
 			err,
 		)
 	}
@@ -252,7 +241,7 @@ func (c *Client) PlayersTopYellowCards(
 	return &resp, nil
 }
 
-// PlayersTopRedCards returns the top assists for a given league and season
+// PlayersTopRedCards returns the top red cards for a given league and season
 /*
 	- league (Type: integer)(Required)
 	  The ID of the league. Value format: 2
@@ -270,14 +259,14 @@ func (c *Client) PlayersTopRedCards(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting players topscorers: %w", err)
+		return nil, fmt.Errorf("error getting players top red cards: %w", err)
 	}
 
 	var resp models.PlayersTopResponse
 	err = json.Unmarshal(body, &resp)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"error unmarshalling players topscorers response: %w",
+			"error unmarshalling players top red cards response: %w",
 			err,
 		)
 	}

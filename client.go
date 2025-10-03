@@ -80,6 +80,13 @@ func (c *Client) get(url string) ([]byte, error) {
 	}
 
 	defer res.Body.Close()
+
+	// Check for non-2xx status codes
+	if res.StatusCode < 200 || res.StatusCode >= 300 {
+		body, _ := io.ReadAll(res.Body)
+		return nil, fmt.Errorf("API request failed with status %d: %s", res.StatusCode, string(body))
+	}
+
 	return io.ReadAll(res.Body)
 }
 
@@ -91,7 +98,7 @@ func (c *Client) formatDate(t time.Time) string {
 func (c *Client) buildURL(endpoint string, params map[string]interface{}) string {
 	u, err := url.Parse(endpoint)
 	if err != nil {
-		return err.Error()
+		return endpoint
 	}
 
 	values := url.Values{}
