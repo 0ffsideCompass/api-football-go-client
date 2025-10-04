@@ -100,23 +100,26 @@ func (c *Client) Players(
 
 // PlayersSquads returns the players data for a given team
 /*
-	- team (Type: integer)
+	- team (Type: integer) (Required)
 	  The ID of the team. Value format: 85
-	- player (Type: integer)
+	- player (Type: integer) (Optional)
 	  The ID of the player. Value format: 85
 */
 
 func (c *Client) PlayersSquads(
 	params map[string]interface{},
 ) (*models.PlayersSquadsResponse, error) {
+	// Team parameter is required
 	_, ok := params["team"].(int)
 	if !ok {
 		return nil, fmt.Errorf("team must exist and be an integer")
 	}
 
-	_, ok = params["player"].(int)
-	if !ok {
-		return nil, fmt.Errorf("player must exist and be an integer")
+	// Player parameter is optional
+	if val, ok := params["player"]; ok {
+		if _, ok := val.(int); !ok {
+			return nil, fmt.Errorf("player must be an integer if provided")
+		}
 	}
 
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersSquadsEndpoint)
