@@ -1,6 +1,41 @@
 package models
 
-import "time"
+import (
+	"encoding/json"
+	"fmt"
+	"strconv"
+	"time"
+)
+
+// FlexibleValue can unmarshal both string and number types from JSON
+type FlexibleValue string
+
+func (fv *FlexibleValue) UnmarshalJSON(data []byte) error {
+	// Try to unmarshal as string first
+	var str string
+	if err := json.Unmarshal(data, &str); err == nil {
+		*fv = FlexibleValue(str)
+		return nil
+	}
+	
+	// Try to unmarshal as number
+	var num float64
+	if err := json.Unmarshal(data, &num); err == nil {
+		*fv = FlexibleValue(fmt.Sprintf("%.0f", num))
+		return nil
+	}
+	
+	// If both fail, try as integer
+	var intVal int
+	if err := json.Unmarshal(data, &intVal); err == nil {
+		*fv = FlexibleValue(strconv.Itoa(intVal))
+		return nil
+	}
+	
+	// If all fail, set to empty string
+	*fv = FlexibleValue("")
+	return nil
+}
 
 // FixturesStatisticsResponse is the response from the /fixtures/statistics endpoint
 type FixturesStatisticsResponse struct {
@@ -146,8 +181,8 @@ type FixturesResponse struct {
 				Logo string `json:"logo"`
 			} `json:"team"`
 			Statistics []struct {
-				Type  string `json:"type"`
-				Value string `json:"value"`
+				Type  string        `json:"type"`
+				Value FlexibleValue `json:"value"`
 			} `json:"statistics"`
 		} `json:"statistics"`
 		Players []struct {
@@ -222,8 +257,8 @@ type FixturesResponse struct {
 		} `json:"players"`
 		Events []struct {
 			Time struct {
-				Elapsed int    `json:"elapsed"`
-				Extra   string `json:"extra"`
+				Elapsed int           `json:"elapsed"`
+				Extra   FlexibleValue `json:"extra"`
 			} `json:"time"`
 			Team struct {
 				ID   int    `json:"id"`
@@ -254,8 +289,8 @@ type FixturesEventsResponse struct {
 	Paging     Pagination  `json:"paging"`
 	Response   []struct {
 		Time struct {
-			Elapsed int    `json:"elapsed"`
-			Extra   string `json:"extra"`
+			Elapsed int           `json:"elapsed"`
+			Extra   FlexibleValue `json:"extra"`
 		} `json:"time"`
 		Team struct {
 			ID   int    `json:"id"`
