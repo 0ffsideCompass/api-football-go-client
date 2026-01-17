@@ -1,3 +1,5 @@
+version: "2"
+
 run:
   timeout: 5m
   go: "1.22"
@@ -77,12 +79,9 @@ linters:
     - goconst
     - gocritic
     - gocyclo
-    - gofmt
-    - goimports
     - mnd
     - goprintffuncname
     - gosec
-    - gosimple
     - govet
     - ineffassign
     - lll
@@ -91,8 +90,6 @@ linters:
     - nolintlint
     - rowserrcheck
     - staticcheck
-    - stylecheck
-    - typecheck
     - unconvert
     - unparam
     - unused

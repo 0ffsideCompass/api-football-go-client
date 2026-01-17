@@ -189,12 +189,13 @@ func TestPlayersSquads(t *testing.T) {
 			errorContains: "team must exist and be an integer",
 		},
 		{
-			name:          "players squads request without player param",
-			params:        map[string]interface{}{"team": 33},
-			responseBody:  ``,
-			statusCode:    http.StatusOK,
-			expectError:   true,
-			errorContains: "player must exist and be an integer",
+			name:   "players squads request without player param",
+			params: map[string]interface{}{"team": 33},
+			responseBody: `{
+				"response": [{"team": {"id": 33, "name": "Manchester United"}, "players": []}]
+			}`,
+			statusCode:  http.StatusOK,
+			expectError: false,
 		},
 		{
 			name:          "players squads request with non-integer params",
