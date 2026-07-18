@@ -36,9 +36,8 @@ const (
 	  The code of the country. Value format: FR
 */
 func (c *Client) Leagues(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.LeaguesResponse, error) {
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, leaguesEndpoint)
 	body, err := c.get(
 		c.buildURL(

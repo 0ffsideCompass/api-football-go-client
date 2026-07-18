@@ -4,11 +4,11 @@ import "time"
 
 // FixturesStatisticsResponse is the response from the /fixtures/statistics endpoint
 type FixturesStatisticsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Team struct {
 			ID   int    `json:"id"`
@@ -24,11 +24,11 @@ type FixturesStatisticsResponse struct {
 
 // FixturesResponse is the response from the /fixtures endpoint
 type FixturesResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Fixture struct {
 			ID        int       `json:"id"`
@@ -247,11 +247,11 @@ type FixturesResponse struct {
 
 // FixturesEventsResponse is the response from the /fixtures/events endpoint
 type FixturesEventsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Time struct {
 			Elapsed int    `json:"elapsed"`
@@ -278,11 +278,11 @@ type FixturesEventsResponse struct {
 
 // FixturesLineupsResponse is the response from the /fixtures/lineups endpoint
 type FixturesLineupsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Team struct {
 			ID     int    `json:"id"`
@@ -319,11 +319,11 @@ type FixturesLineupsResponse struct {
 
 // FixturesPlayersResponse is the response from the /fixtures/players endpoint
 type FixturesPlayersResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Team struct {
 			ID     int       `json:"id"`

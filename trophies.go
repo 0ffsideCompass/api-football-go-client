@@ -21,10 +21,10 @@ const (
 	At least one of the following parameters must be passed
 */
 func (c *Client) Trophies(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.TrophiesResponse, error) {
 	// Validate the parameters
-	if err := validateTrophiesParams(params); err != nil {
+	if err := requireOneIntParam(params, "coach", "player"); err != nil {
 		return nil, err
 	}
 
@@ -49,26 +49,4 @@ func (c *Client) Trophies(
 	}
 
 	return &resp, nil
-}
-
-func validateTrophiesParams(params map[string]interface{}) error {
-	if _, hasCoach := params["coach"]; !hasCoach {
-		if _, hasPlayer := params["player"]; !hasPlayer {
-			return fmt.Errorf("at least one of 'coach' or 'player' must be provided")
-		}
-	}
-
-	for key, value := range params {
-		if key == "coach" || key == "player" {
-			val, ok := value.(int)
-			if !ok {
-				return fmt.Errorf("%s must be an integer", key)
-			}
-
-			if val != int(int(val)) {
-				return fmt.Errorf("%s must be an integer", key)
-			}
-		}
-	}
-	return nil
 }

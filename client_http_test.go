@@ -13,11 +13,13 @@ import (
 
 // MockHTTPClient is a mock implementation of the HttpClient interface
 type MockHTTPClient struct {
-	Response *http.Response
-	Err      error
+	Response    *http.Response
+	Err         error
+	LastRequest *http.Request
 }
 
 func (m *MockHTTPClient) Do(req *http.Request) (*http.Response, error) {
+	m.LastRequest = req
 	if m.Err != nil {
 		return nil, m.Err
 	}
@@ -109,12 +111,10 @@ func TestHTTPStatusValidation(t *testing.T) {
 			if tt.expectError {
 				assert.Error(t, err)
 				assert.Contains(t, err.Error(), tt.errorContains)
-			} else {
+			} else if err != nil {
 				// The error might be from JSON unmarshalling for empty responses,
 				// but not from HTTP status check
-				if err != nil {
-					assert.NotContains(t, err.Error(), "API request failed with status")
-				}
+				assert.NotContains(t, err.Error(), "API request failed with status")
 			}
 		})
 	}

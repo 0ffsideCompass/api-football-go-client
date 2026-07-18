@@ -22,10 +22,10 @@ const (
 */
 
 func (c *Client) Sidelined(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.SidelinedResponse, error) {
 	// Validate the parameters
-	if err := validateSidelinedParams(params); err != nil {
+	if err := requireOneIntParam(params, "coach", "player"); err != nil {
 		return nil, err
 	}
 
@@ -51,28 +51,4 @@ func (c *Client) Sidelined(
 	}
 
 	return &resp, nil
-}
-
-func validateSidelinedParams(params map[string]interface{}) error {
-	if _, hasCoach := params["coach"]; !hasCoach {
-		if _, hasPlayer := params["player"]; !hasPlayer {
-			return fmt.Errorf("at least one of 'coach' or 'player' must be provided")
-		}
-	}
-
-	for key, value := range params {
-		if key == "coach" || key == "player" {
-			switch v := value.(type) {
-			case int:
-				// int is valid
-			case float64:
-				if v != float64(int(v)) {
-					return fmt.Errorf("%s must be an integer", key)
-				}
-			default:
-				return fmt.Errorf("%s must be an integer", key)
-			}
-		}
-	}
-	return nil
 }

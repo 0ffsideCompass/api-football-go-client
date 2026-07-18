@@ -21,7 +21,7 @@ const (
 	  The ID of the team. Value format: 85
 */
 func (c *Client) Standings(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.StandingsResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, standingsEndpoint)
 	body, err := c.get(

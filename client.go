@@ -2,11 +2,13 @@
 package client
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
 
@@ -15,10 +17,11 @@ var (
 )
 
 const (
-	authKey    = "X-RapidAPI-Key"
-	hostKey    = "X-RapidAPI-Host"
-	hostVal    = "api-football-v1.p.rapidapi.com"
-	dateFormat = "2006-01-02"
+	authKey      = "X-RapidAPI-Key"
+	hostKey      = "X-RapidAPI-Host"
+	hostVal      = "api-football-v1.p.rapidapi.com"
+	apiSportsKey = "x-apisports-key"
+	dateFormat   = "2006-01-02"
 )
 
 // HttpClient is an interface that abstracts the http.Client's Do method,
@@ -38,27 +41,24 @@ type Client struct {
 // New creates a new Client instance for the API-Football service using the default domain.
 // It returns an error if the API key is missing or the provided HTTP client is nil.
 func New(key string, client HttpClient) (*Client, error) {
-	if key == "" {
-		return nil, errors.New("missing key")
-	}
-	if client == nil {
-		return nil, errors.New("missing http client")
-	}
-	return &Client{
-		key:    key,
-		Domain: domain,
-		client: client,
-	}, nil
+	return NewWithDomain(key, domain, client)
 }
 
 // NewWithDomain creates a new Client instance with a custom domain.
-// It returns an error if the API key is missing or the provided HTTP client is nil.
+// It returns an error if the API key or domain is missing, or the provided HTTP client is nil.
 func NewWithDomain(key, domain string, client HttpClient) (*Client, error) {
 	if key == "" {
 		return nil, errors.New("missing key")
 	}
+	if domain == "" {
+		return nil, errors.New("missing domain")
+	}
 	if client == nil {
 		return nil, errors.New("missing http client")
+	}
+	// Endpoint paths are appended directly to the domain, so it must end with a slash.
+	if !strings.HasSuffix(domain, "/") {
+		domain += "/"
 	}
 	return &Client{
 		key:    key,
@@ -67,13 +67,16 @@ func NewWithDomain(key, domain string, client HttpClient) (*Client, error) {
 	}, nil
 }
 
-func (c *Client) get(url string) ([]byte, error) {
-	req, err := http.NewRequest(http.MethodGet, url, nil)
+func (c *Client) get(endpoint string) ([]byte, error) {
+	req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, endpoint, http.NoBody)
 	if err != nil {
 		return nil, err
 	}
 	req.Header.Add(authKey, c.key)
 	req.Header.Add(hostKey, hostVal)
+	// The direct v3.football.api-sports.io API authenticates with this header;
+	// RapidAPI ignores it, so it is safe to send in both modes.
+	req.Header.Add(apiSportsKey, c.key)
 
 	res, err := c.client.Do(req)
 	if err != nil {
@@ -83,8 +86,11 @@ func (c *Client) get(url string) ([]byte, error) {
 	defer res.Body.Close()
 
 	// Check for non-2xx status codes
-	if res.StatusCode < 200 || res.StatusCode >= 300 {
-		body, _ := io.ReadAll(res.Body)
+	if res.StatusCode < http.StatusOK || res.StatusCode >= http.StatusMultipleChoices {
+		var body []byte
+		if b, readErr := io.ReadAll(res.Body); readErr == nil {
+			body = b
+		}
 		return nil, fmt.Errorf("API request failed with status %d: %s", res.StatusCode, string(body))
 	}
 
@@ -96,7 +102,7 @@ func (c *Client) formatDate(t time.Time) string {
 }
 
 // buildURL constructs the URL with dynamic parameters using net/url
-func (c *Client) buildURL(endpoint string, params map[string]interface{}) string {
+func (c *Client) buildURL(endpoint string, params map[string]any) string {
 	u, err := url.Parse(endpoint)
 	if err != nil {
 		return endpoint

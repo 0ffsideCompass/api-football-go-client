@@ -14,7 +14,7 @@ import (
 func TestInjuries(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -22,7 +22,7 @@ func TestInjuries(t *testing.T) {
 	}{
 		{
 			name:   "successful injuries request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Player Name"}, "team": {"id": 33}, "fixture": {"id": 12345}}
@@ -36,7 +36,7 @@ func TestInjuries(t *testing.T) {
 		},
 		{
 			name:          "injuries request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023},
+			params:        map[string]any{"league": 39, "season": 2023},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -73,7 +73,7 @@ func TestInjuries(t *testing.T) {
 func TestCoachs(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -81,7 +81,7 @@ func TestCoachs(t *testing.T) {
 	}{
 		{
 			name:   "successful coaches request",
-			params: map[string]interface{}{"team": 33},
+			params: map[string]any{"team": 33},
 			responseBody: `{
 				"response": [
 					{"id": 1, "name": "Coach Name", "team": {"id": 33, "name": "Manchester United"}}
@@ -95,7 +95,7 @@ func TestCoachs(t *testing.T) {
 		},
 		{
 			name:          "coaches request with invalid JSON response",
-			params:        map[string]interface{}{"team": 33},
+			params:        map[string]any{"team": 33},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -132,7 +132,7 @@ func TestCoachs(t *testing.T) {
 func TestSidelined(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -140,7 +140,7 @@ func TestSidelined(t *testing.T) {
 	}{
 		{
 			name:   "successful sidelined request",
-			params: map[string]interface{}{"player": 276},
+			params: map[string]any{"player": 276},
 			responseBody: `{
 				"response": [
 					{"type": "Injury", "start": "2023-01-01", "end": "2023-01-15"}
@@ -154,7 +154,7 @@ func TestSidelined(t *testing.T) {
 		},
 		{
 			name:          "sidelined request with invalid JSON response",
-			params:        map[string]interface{}{"player": 276},
+			params:        map[string]any{"player": 276},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -191,7 +191,7 @@ func TestSidelined(t *testing.T) {
 func TestTransfers(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -199,7 +199,7 @@ func TestTransfers(t *testing.T) {
 	}{
 		{
 			name:   "successful transfers request",
-			params: map[string]interface{}{"player": 276},
+			params: map[string]any{"player": 276},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276}, "transfers": [{"date": "2023-01-01", "teams": {"in": {"id": 33}, "out": {"id": 34}}}]}
@@ -213,7 +213,7 @@ func TestTransfers(t *testing.T) {
 		},
 		{
 			name:          "transfers request with invalid JSON response",
-			params:        map[string]interface{}{"player": 276},
+			params:        map[string]any{"player": 276},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -250,7 +250,7 @@ func TestTransfers(t *testing.T) {
 func TestTrophies(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -258,7 +258,7 @@ func TestTrophies(t *testing.T) {
 	}{
 		{
 			name:   "successful trophies request",
-			params: map[string]interface{}{"player": 276},
+			params: map[string]any{"player": 276},
 			responseBody: `{
 				"response": [
 					{"league": "Premier League", "country": "England", "season": "2022-2023", "place": "Winner"}
@@ -272,7 +272,7 @@ func TestTrophies(t *testing.T) {
 		},
 		{
 			name:          "trophies request with invalid JSON response",
-			params:        map[string]interface{}{"player": 276},
+			params:        map[string]any{"player": 276},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -309,7 +309,7 @@ func TestTrophies(t *testing.T) {
 func TestVenues(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -317,7 +317,7 @@ func TestVenues(t *testing.T) {
 	}{
 		{
 			name:   "successful venues request",
-			params: map[string]interface{}{"city": "Manchester"},
+			params: map[string]any{"city": "Manchester"},
 			responseBody: `{
 				"response": [
 					{"id": 1, "name": "Old Trafford", "city": "Manchester", "capacity": 76000}
@@ -331,7 +331,7 @@ func TestVenues(t *testing.T) {
 		},
 		{
 			name:          "venues request with invalid JSON response",
-			params:        map[string]interface{}{"city": "Manchester"},
+			params:        map[string]any{"city": "Manchester"},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,

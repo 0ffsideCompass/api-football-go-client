@@ -2,11 +2,11 @@ package models
 
 // TeamsResponse is the response from the /teams endpoint
 type TeamsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Team struct {
 			ID       int    `json:"id"`
@@ -37,9 +37,9 @@ type TeamsStatisticsResponse struct {
 		Team   string `json:"team"`
 		League string `json:"league"`
 	} `json:"parameters"`
-	Errors   []interface{} `json:"errors"`
-	Results  int           `json:"results"`
-	Paging   Pagination    `json:"paging"`
+	Errors   []any      `json:"errors"`
+	Results  int        `json:"results"`
+	Paging   Pagination `json:"paging"`
 	Response struct {
 		League struct {
 			ID      int    `json:"id"`

@@ -9,6 +9,9 @@ import (
 
 const (
 	coachsEndpoint = "coachs"
+
+	// minSearchLength is the minimum length the API accepts for 'search' values.
+	minSearchLength = 3
 )
 
 // Coachs hits the /coachs endpoint
@@ -22,7 +25,7 @@ const (
 	one of the following parameters must be passed
 */
 func (c *Client) Coachs(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.Coachs, error) {
 	// Validate the parameters
 	if err := validateCoachsParams(params); err != nil {
@@ -53,7 +56,7 @@ func (c *Client) Coachs(
 }
 
 // validateCoachsParams validates the parameters for the Coachs endpoint.
-func validateCoachsParams(params map[string]interface{}) error {
+func validateCoachsParams(params map[string]any) error {
 	// At least one of these parameters must be passed
 	if _, hasTeam := params["team"]; !hasTeam {
 		if _, hasID := params["id"]; !hasID {
@@ -63,24 +66,10 @@ func validateCoachsParams(params map[string]interface{}) error {
 		}
 	}
 
-	// Validate 'team' parameter
-	if teamID, ok := params["team"].(int); ok {
-		if teamID != int(teamID) {
-			return fmt.Errorf("'team' must be an integer")
-		}
-	}
-
-	// Validate 'id' parameter
-	if coachID, ok := params["id"].(int); ok {
-		if coachID != int(coachID) {
-			return fmt.Errorf("'id' must be an integer")
-		}
-	}
-
 	// Validate 'search' parameter
 	if search, ok := params["search"].(string); ok {
-		if len(search) < 3 {
-			return fmt.Errorf("'search' must be at least 3 characters long")
+		if len(search) < minSearchLength {
+			return fmt.Errorf("'search' must be at least %d characters long", minSearchLength)
 		}
 	}
 

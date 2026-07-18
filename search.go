@@ -18,15 +18,13 @@ func (t Type) String() string {
 	return string(t)
 }
 
+// Search queries the /teams, /leagues, or /players endpoint by name,
+// depending on the given Type, and returns the raw response body.
 func (c *Client) Search(q string, t Type) ([]byte, error) {
-	// Correctly construct the path
-	path := fmt.Sprintf("%ss/%s/", t.String(), t.String())
+	values := url.Values{}
+	values.Set("search", q)
+	fullURL := fmt.Sprintf("%s%ss?%s", c.Domain, t.String(), values.Encode())
 
-	// Now escape the query and append it to the path
-	escapedQuery := url.PathEscape(q)
-	fullURL := c.Domain + path + escapedQuery
-
-	fmt.Println(fullURL)
 	body, err := c.get(fullURL)
 	if err != nil {
 		return nil, fmt.Errorf("error getting search results: %w", err)

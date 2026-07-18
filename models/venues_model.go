@@ -2,11 +2,11 @@ package models
 
 // VenuesResponse is the response from the /venues endpoint
 type VenuesResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		ID       int    `json:"id"`
 		Name     string `json:"name"`

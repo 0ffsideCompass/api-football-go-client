@@ -14,7 +14,7 @@ import (
 func TestPlayersSeasons(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -22,7 +22,7 @@ func TestPlayersSeasons(t *testing.T) {
 	}{
 		{
 			name:   "successful players seasons request",
-			params: map[string]interface{}{"player": 276},
+			params: map[string]any{"player": 276},
 			responseBody: `{
 				"response": [2020, 2021, 2022, 2023],
 				"errors": [],
@@ -34,7 +34,7 @@ func TestPlayersSeasons(t *testing.T) {
 		},
 		{
 			name:          "players seasons request without player param",
-			params:        map[string]interface{}{"season": 2023},
+			params:        map[string]any{"season": 2023},
 			responseBody:  ``,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -42,7 +42,7 @@ func TestPlayersSeasons(t *testing.T) {
 		},
 		{
 			name:          "players seasons request with non-integer player param",
-			params:        map[string]interface{}{"player": "invalid"},
+			params:        map[string]any{"player": "invalid"},
 			responseBody:  ``,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -50,7 +50,7 @@ func TestPlayersSeasons(t *testing.T) {
 		},
 		{
 			name:          "players seasons request with API error",
-			params:        map[string]interface{}{"player": -1},
+			params:        map[string]any{"player": -1},
 			responseBody:  `{"error": "Invalid player ID"}`,
 			statusCode:    http.StatusBadRequest,
 			expectError:   true,
@@ -87,7 +87,7 @@ func TestPlayersSeasons(t *testing.T) {
 func TestPlayers(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -95,7 +95,7 @@ func TestPlayers(t *testing.T) {
 	}{
 		{
 			name:   "successful players request",
-			params: map[string]interface{}{"team": 33, "season": 2023},
+			params: map[string]any{"team": 33, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Cristiano Ronaldo", "age": 38}}
@@ -109,7 +109,7 @@ func TestPlayers(t *testing.T) {
 		},
 		{
 			name:   "players request with search parameter",
-			params: map[string]interface{}{"search": "Ronaldo", "league": 39},
+			params: map[string]any{"search": "Ronaldo", "league": 39},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Cristiano Ronaldo", "age": 38}}
@@ -123,7 +123,7 @@ func TestPlayers(t *testing.T) {
 		},
 		{
 			name:          "players request with invalid JSON response",
-			params:        map[string]interface{}{"team": 33},
+			params:        map[string]any{"team": 33},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -160,7 +160,7 @@ func TestPlayers(t *testing.T) {
 func TestPlayersSquads(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -168,7 +168,7 @@ func TestPlayersSquads(t *testing.T) {
 	}{
 		{
 			name:   "successful players squads request",
-			params: map[string]interface{}{"team": 33, "player": 276},
+			params: map[string]any{"team": 33, "player": 276},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33, "name": "Manchester United"}, "players": []}
@@ -182,7 +182,7 @@ func TestPlayersSquads(t *testing.T) {
 		},
 		{
 			name:          "players squads request without team param",
-			params:        map[string]interface{}{"player": 276},
+			params:        map[string]any{"player": 276},
 			responseBody:  ``,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -190,7 +190,7 @@ func TestPlayersSquads(t *testing.T) {
 		},
 		{
 			name:   "players squads request without player param",
-			params: map[string]interface{}{"team": 33},
+			params: map[string]any{"team": 33},
 			responseBody: `{
 				"response": [{"team": {"id": 33, "name": "Manchester United"}, "players": []}]
 			}`,
@@ -199,7 +199,7 @@ func TestPlayersSquads(t *testing.T) {
 		},
 		{
 			name:          "players squads request with non-integer params",
-			params:        map[string]interface{}{"team": "invalid", "player": "invalid"},
+			params:        map[string]any{"team": "invalid", "player": "invalid"},
 			responseBody:  ``,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -236,7 +236,7 @@ func TestPlayersSquads(t *testing.T) {
 func TestPlayersTopScorers(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -244,7 +244,7 @@ func TestPlayersTopScorers(t *testing.T) {
 	}{
 		{
 			name:   "successful top scorers request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Cristiano Ronaldo"}, "statistics": [{"goals": {"total": 25}}]}
@@ -258,7 +258,7 @@ func TestPlayersTopScorers(t *testing.T) {
 		},
 		{
 			name:          "top scorers request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023},
+			params:        map[string]any{"league": 39, "season": 2023},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -295,7 +295,7 @@ func TestPlayersTopScorers(t *testing.T) {
 func TestPlayersTopAssists(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -303,7 +303,7 @@ func TestPlayersTopAssists(t *testing.T) {
 	}{
 		{
 			name:   "successful top assists request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Kevin De Bruyne"}, "statistics": [{"goals": {"assists": 15}}]}
@@ -317,7 +317,7 @@ func TestPlayersTopAssists(t *testing.T) {
 		},
 		{
 			name:          "top assists request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023},
+			params:        map[string]any{"league": 39, "season": 2023},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -354,7 +354,7 @@ func TestPlayersTopAssists(t *testing.T) {
 func TestPlayersTopCards(t *testing.T) {
 	yellowCardTests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -362,7 +362,7 @@ func TestPlayersTopCards(t *testing.T) {
 	}{
 		{
 			name:   "successful top yellow cards request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Sergio Ramos"}, "statistics": [{"cards": {"yellow": 10}}]}
@@ -376,7 +376,7 @@ func TestPlayersTopCards(t *testing.T) {
 		},
 		{
 			name:          "top yellow cards request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023},
+			params:        map[string]any{"league": 39, "season": 2023},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -411,7 +411,7 @@ func TestPlayersTopCards(t *testing.T) {
 
 	redCardTests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -419,7 +419,7 @@ func TestPlayersTopCards(t *testing.T) {
 	}{
 		{
 			name:   "successful top red cards request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"player": {"id": 276, "name": "Sergio Ramos"}, "statistics": [{"cards": {"red": 2}}]}
@@ -433,7 +433,7 @@ func TestPlayersTopCards(t *testing.T) {
 		},
 		{
 			name:          "top red cards request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023},
+			params:        map[string]any{"league": 39, "season": 2023},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,

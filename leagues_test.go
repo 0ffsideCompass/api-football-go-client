@@ -14,7 +14,7 @@ import (
 func TestLeagues(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -22,7 +22,7 @@ func TestLeagues(t *testing.T) {
 	}{
 		{
 			name:   "successful leagues request",
-			params: map[string]interface{}{"country": "England"},
+			params: map[string]any{"country": "England"},
 			responseBody: `{
 				"response": [
 					{"league": {"id": 39, "name": "Premier League", "country": "England"}}
@@ -36,7 +36,7 @@ func TestLeagues(t *testing.T) {
 		},
 		{
 			name:   "leagues request with search parameter",
-			params: map[string]interface{}{"search": "Premier League"},
+			params: map[string]any{"search": "Premier League"},
 			responseBody: `{
 				"response": [
 					{"league": {"id": 39, "name": "Premier League", "country": "England"}}
@@ -50,7 +50,7 @@ func TestLeagues(t *testing.T) {
 		},
 		{
 			name:          "leagues request with API error",
-			params:        map[string]interface{}{"country": "InvalidCountry"},
+			params:        map[string]any{"country": "InvalidCountry"},
 			responseBody:  `{"error": "Invalid country"}`,
 			statusCode:    http.StatusBadRequest,
 			expectError:   true,
@@ -70,7 +70,7 @@ func TestLeagues(t *testing.T) {
 		},
 		{
 			name:          "leagues request with invalid JSON response",
-			params:        map[string]interface{}{"country": "England"},
+			params:        map[string]any{"country": "England"},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,

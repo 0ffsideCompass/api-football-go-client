@@ -2,11 +2,11 @@ package models
 
 // TrophiesResponse is the response from the /trophies endpointf
 type TrophiesResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		League  string `json:"league"`
 		Country string `json:"country"`

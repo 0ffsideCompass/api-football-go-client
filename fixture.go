@@ -11,7 +11,7 @@ import (
 const (
 	fixturesByDateEndpoint    = "fixtures?league=%d&season=%d&from=%s&to=%s"
 	fixtureHeadToHeadEndpoint = "fixtures/headtohead"
-	fixtureRounds             = "fixtures/rounds?league=%d&season=%d" //TODO not important yet
+	fixtureRounds             = "fixtures/rounds?league=%d&season=%d" // TODO: not implemented yet
 	fixtureEndpoint           = "fixtures"
 	fixtureStatisticsEndpoint = "fixtures/statistics"
 	fixturesEventsEndpoint    = "fixtures/events"
@@ -29,10 +29,9 @@ const (
 	The ID of the player. Value format: 85.
 */
 func (c *Client) FixturesLineups(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixturesLineupsResponse, error) {
-
-	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturesEventsEndpoint)
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureLineupsEndpoint)
 	body, err := c.get(
 		c.buildURL(
 			endpointURL,
@@ -40,7 +39,7 @@ func (c *Client) FixturesLineups(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting fixtures events: %w", err)
+		return nil, fmt.Errorf("error getting fixtures lineups: %w", err)
 	}
 
 	var resp models.FixturesLineupsResponse
@@ -64,7 +63,7 @@ func (c *Client) FixturesLineups(
 	The ID of the player. Value format: 85.
 */
 func (c *Client) FixturesEvents(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixturesEventsResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturesEventsEndpoint)
 	body, err := c.get(
@@ -140,7 +139,7 @@ func (c *Client) FixturesEvents(
 ==================================================================================
 */
 func (c *Client) Fixture(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixturesResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureEndpoint)
 
@@ -190,9 +189,8 @@ func (c *Client) Fixture(
 	* "NS-PST-FT": Combined fixture statuses.
 */
 func (c *Client) FixtureHeadToHead(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixtureHeadToHeadResp, error) {
-
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureHeadToHeadEndpoint)
 
 	body, err := c.get(
@@ -202,7 +200,7 @@ func (c *Client) FixtureHeadToHead(
 		),
 	)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error getting fixtures head to head: %w", err)
 	}
 
 	var resp models.FixtureHeadToHeadResp
@@ -221,7 +219,7 @@ func (c *Client) FixtureByDateAndLeague(
 	toDate time.Time,
 ) (*models.FixturesByDateResp, error) {
 	body, err := c.get(
-		fmt.Sprintf(
+		c.Domain + fmt.Sprintf(
 			fixturesByDateEndpoint,
 			leagueID,
 			season,
@@ -252,7 +250,7 @@ func (c *Client) FixtureByDateAndLeague(
 	The ID of the team. Value format: 85.
 */
 func (c *Client) FixtureStatistics(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixturesStatisticsResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureStatisticsEndpoint)
 	body, err := c.get(
@@ -284,7 +282,7 @@ func (c *Client) FixtureStatistics(
 	The ID of the team. Value format: 85.
 */
 func (c *Client) FixturesPlayer(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.FixturesPlayersResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixturePlayerEndpoint)
 	body, err := c.get(
@@ -294,7 +292,7 @@ func (c *Client) FixturesPlayer(
 		),
 	)
 	if err != nil {
-		return nil, fmt.Errorf("error getting fixtures statistics: %w", err)
+		return nil, fmt.Errorf("error getting fixtures players: %w", err)
 	}
 
 	var resp models.FixturesPlayersResponse

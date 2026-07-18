@@ -14,7 +14,7 @@ import (
 func TestTeams(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -22,7 +22,7 @@ func TestTeams(t *testing.T) {
 	}{
 		{
 			name:   "successful teams request",
-			params: map[string]interface{}{"league": 39, "season": 2023},
+			params: map[string]any{"league": 39, "season": 2023},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33, "name": "Manchester United", "country": "England"}}
@@ -36,7 +36,7 @@ func TestTeams(t *testing.T) {
 		},
 		{
 			name:   "teams request with search parameter",
-			params: map[string]interface{}{"search": "Manchester"},
+			params: map[string]any{"search": "Manchester"},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33, "name": "Manchester United", "country": "England"}}
@@ -50,7 +50,7 @@ func TestTeams(t *testing.T) {
 		},
 		{
 			name:          "teams request with API error",
-			params:        map[string]interface{}{"league": -1},
+			params:        map[string]any{"league": -1},
 			responseBody:  `{"error": "Invalid league"}`,
 			statusCode:    http.StatusBadRequest,
 			expectError:   true,
@@ -58,7 +58,7 @@ func TestTeams(t *testing.T) {
 		},
 		{
 			name:          "teams request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39},
+			params:        map[string]any{"league": 39},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -95,7 +95,7 @@ func TestTeams(t *testing.T) {
 func TestTeamsStatistics(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -103,7 +103,7 @@ func TestTeamsStatistics(t *testing.T) {
 	}{
 		{
 			name:   "successful team statistics request",
-			params: map[string]interface{}{"league": 39, "season": 2023, "team": 33},
+			params: map[string]any{"league": 39, "season": 2023, "team": 33},
 			responseBody: `{
 				"response": {
 					"league": {"id": 39, "name": "Premier League"},
@@ -118,7 +118,7 @@ func TestTeamsStatistics(t *testing.T) {
 		},
 		{
 			name:          "team statistics request with missing required params",
-			params:        map[string]interface{}{"league": 39},
+			params:        map[string]any{"league": 39},
 			responseBody:  `{"error": "Missing required parameters"}`,
 			statusCode:    http.StatusBadRequest,
 			expectError:   true,
@@ -126,7 +126,7 @@ func TestTeamsStatistics(t *testing.T) {
 		},
 		{
 			name:          "team statistics request with invalid JSON response",
-			params:        map[string]interface{}{"league": 39, "season": 2023, "team": 33},
+			params:        map[string]any{"league": 39, "season": 2023, "team": 33},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,

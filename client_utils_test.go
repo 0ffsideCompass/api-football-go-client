@@ -13,75 +13,51 @@ import (
 )
 
 func TestBuildURL(t *testing.T) {
+	// buildURL is private, so exercise it through Leagues and inspect the
+	// query string of the request the client actually sent.
 	tests := []struct {
-		name     string
-		endpoint string
-		params   map[string]interface{}
-		expected string
+		name          string
+		params        map[string]any
+		expectedQuery string
 	}{
 		{
-			name:     "simple endpoint without params",
-			endpoint: "https://api.example.com/teams",
-			params:   nil,
-			expected: "https://api.example.com/teams",
+			name:          "no params",
+			params:        nil,
+			expectedQuery: "",
 		},
 		{
-			name:     "endpoint with single param",
-			endpoint: "https://api.example.com/teams",
-			params:   map[string]interface{}{"league": 39},
-			expected: "https://api.example.com/teams?league=39",
+			name:          "single param",
+			params:        map[string]any{"league": 39},
+			expectedQuery: "league=39",
 		},
 		{
-			name:     "endpoint with multiple params",
-			endpoint: "https://api.example.com/teams",
-			params: map[string]interface{}{
+			name: "multiple params are sorted by key",
+			params: map[string]any{
+				"team":   33,
 				"league": 39,
 				"season": 2023,
-				"team":   33,
 			},
-			expected: "https://api.example.com/teams?league=39&season=2023&team=33",
+			expectedQuery: "league=39&season=2023&team=33",
 		},
 		{
-			name:     "endpoint with string params",
-			endpoint: "https://api.example.com/players",
-			params: map[string]interface{}{
-				"search": "Ronaldo",
-				"league": 39,
+			name: "string params are escaped",
+			params: map[string]any{
+				"search": "Manchester United",
 			},
-			expected: "https://api.example.com/players?league=39&search=Ronaldo",
-		},
-		{
-			name:     "invalid endpoint should return original",
-			endpoint: "://invalid-url",
-			params:   map[string]interface{}{"test": "value"},
-			expected: "://invalid-url",
+			expectedQuery: "search=Manchester+United",
 		},
 	}
 
-	// Create a client to test the buildURL method
-	httpClient := &MockHTTPClient{}
-	apiClient, err := client.New("test-key", httpClient)
-	assert.NoError(t, err)
-
-	// We need to use reflection or create a test helper to access the private buildURL method
-	// For now, we'll test it indirectly through a public method that uses buildURL
-	// This is a limitation of testing private methods in Go
-
-	// Instead, let's test the functionality through actual API calls
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			// Since buildURL is private, we test it indirectly by checking that
-			// the client can handle various parameter combinations without panicking
-			// and that the URL construction doesn't cause errors
+			mockClient := newMockClient()
+			apiClient, err := client.New("test-key", mockClient)
+			assert.NoError(t, err)
 
-			if tt.endpoint == "://invalid-url" {
-				// Test invalid URLs by creating a client and seeing if it handles gracefully
-				// The buildURL method should return the original endpoint on parse error
-				assert.NotNil(t, apiClient)
-			} else {
-				// For valid endpoints, ensure the client handles the parameters correctly
-				assert.NotNil(t, apiClient)
-			}
+			_, err = apiClient.Leagues(tt.params)
+			assert.NoError(t, err)
+			assert.NotNil(t, mockClient.LastRequest)
+			assert.Equal(t, tt.expectedQuery, mockClient.LastRequest.URL.RawQuery)
 		})
 	}
 }

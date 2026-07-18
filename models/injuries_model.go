@@ -4,11 +4,11 @@ import "time"
 
 // InjuriesResponse is the response from the /injuries endpoints
 type InjuriesResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Player struct {
 			ID     int    `json:"id"`

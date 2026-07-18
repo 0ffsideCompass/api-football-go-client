@@ -1,3 +1,5 @@
+[![CI](https://github.com/0ffsideCompass/api-football-go-client/actions/workflows/ci.yml/badge.svg)](https://github.com/0ffsideCompass/api-football-go-client/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/0ffsideCompass/api-football-go-client/branch/main/graph/badge.svg)](https://codecov.io/gh/0ffsideCompass/api-football-go-client)
 [![Go Report Card](https://goreportcard.com/badge/github.com/0ffsideCompass/api-football-go-client)](https://goreportcard.com/report/0ffsideCompass/api-football-go-client)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![GoDoc](https://pkg.go.dev/badge/github.com/0ffsideCompass/api-football-go-client.svg)](https://pkg.go.dev/github.com/0ffsideCompass/api-football-go-client)
@@ -45,7 +47,7 @@ import (
     "net/http"
     "time"
 
-    "github.com/0ffsideCompass/api-football-go-client/client"
+    client "github.com/0ffsideCompass/api-football-go-client"
 )
 
 func main() {
@@ -59,7 +61,7 @@ func main() {
     }
 
     // Example: Fetch leagues for the 2020 season in England
-    params := map[string]interface{}{
+    params := map[string]any{
         "season":  2020,
         "country": "England",
     }

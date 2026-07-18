@@ -11,6 +11,9 @@ import (
 
 const (
 	injuriesEndpoint = "injuries"
+
+	// seasonDigits is the number of digits the API expects for a season (YYYY).
+	seasonDigits = 4
 )
 
 // Injuries hits the /injuries endpoint
@@ -33,7 +36,7 @@ const (
 	if player is provided, season is required
 */
 func (c *Client) Injuries(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.InjuriesResponse, error) {
 	// Validate the parameters
 	if err := validateInjuriesParams(params); err != nil {
@@ -63,55 +66,36 @@ func (c *Client) Injuries(
 	return &resp, nil
 }
 
-func validateInjuriesParams(params map[string]interface{}) error {
-	// Validate 'league' parameter
-	if leagueID, ok := params["league"].(float64); ok {
-		if leagueID != float64(int(leagueID)) {
-			return fmt.Errorf("'league' must be an integer")
+func validateInjuriesParams(params map[string]any) error {
+	// Validate integer parameters. Values may arrive as int (Go callers) or
+	// float64 (values decoded from JSON).
+	for _, key := range []string{"league", "fixture", "team", "player"} {
+		value, ok := params[key]
+		if !ok {
+			continue
 		}
+		if _, err := asInt(value); err != nil {
+			return fmt.Errorf("'%s' must be an integer", key)
+		}
+	}
 
-		// If 'league' is provided, 'season' is required
-		if _, hasSeason := params["season"]; !hasSeason {
-			return fmt.Errorf("'season' is required when 'league' is provided")
+	// 'season' is required when any of these parameters is provided
+	for _, key := range []string{"league", "team", "player"} {
+		if _, ok := params[key]; ok {
+			if _, hasSeason := params["season"]; !hasSeason {
+				return fmt.Errorf("'season' is required when '%s' is provided", key)
+			}
 		}
 	}
 
 	// Validate 'season' parameter
-	if season, ok := params["season"].(float64); ok {
-		seasonStr := strconv.Itoa(int(season))
-		if len(seasonStr) != 4 {
-			return fmt.Errorf("'season' must be 4 digits")
+	if seasonVal, ok := params["season"]; ok {
+		season, err := asInt(seasonVal)
+		if err != nil {
+			return fmt.Errorf("'season' must be an integer")
 		}
-	}
-
-	// Validate 'fixture' parameter
-	if fixtureID, ok := params["fixture"].(float64); ok {
-		if fixtureID != float64(int(fixtureID)) {
-			return fmt.Errorf("'fixture' must be an integer")
-		}
-	}
-
-	// Validate 'team' parameter
-	if teamID, ok := params["team"].(float64); ok {
-		if teamID != float64(int(teamID)) {
-			return fmt.Errorf("'team' must be an integer")
-		}
-
-		// If 'team' is provided, 'season' is required
-		if _, hasSeason := params["season"]; !hasSeason {
-			return fmt.Errorf("'season' is required when 'team' is provided")
-		}
-	}
-
-	// Validate 'player' parameter
-	if playerID, ok := params["player"].(float64); ok {
-		if playerID != float64(int(playerID)) {
-			return fmt.Errorf("'player' must be an integer")
-		}
-
-		// If 'player' is provided, 'season' is required
-		if _, hasSeason := params["season"]; !hasSeason {
-			return fmt.Errorf("'season' is required when 'player' is provided")
+		if len(strconv.Itoa(season)) != seasonDigits {
+			return fmt.Errorf("'season' must be %d digits", seasonDigits)
 		}
 	}
 
@@ -124,6 +108,21 @@ func validateInjuriesParams(params map[string]interface{}) error {
 	}
 
 	return nil
+}
+
+// asInt converts an int or a whole-number float64 to int.
+func asInt(value any) (int, error) {
+	switch v := value.(type) {
+	case int:
+		return v, nil
+	case float64:
+		if v != float64(int(v)) {
+			return 0, fmt.Errorf("not an integer")
+		}
+		return int(v), nil
+	default:
+		return 0, fmt.Errorf("not an integer")
+	}
 }
 
 // Helper function to check the date format (YYYY-MM-DD)

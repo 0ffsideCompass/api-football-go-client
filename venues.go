@@ -27,7 +27,7 @@ At least one of the following parameters must be passed:
   The name of the venue. Value format: "OAKA Stadium" should be => 3 characters
 */
 func (c *Client) Venues(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.VenuesResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, venuesEndpoint)
 	body, err := c.get(

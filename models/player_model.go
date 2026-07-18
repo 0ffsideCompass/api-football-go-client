@@ -2,21 +2,21 @@ package models
 
 // PlayersSeasonsResponse is the response from the /players/seasons endpoint
 type PlayersSeasonsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
-	Response   []int       `json:"response"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
+	Response   []int      `json:"response"`
 }
 
 // PlayersResponse is the response from the /players endpoint
 type PlayersResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Player struct {
 			ID        int    `json:"id"`
@@ -114,11 +114,11 @@ type PlayersResponse struct {
 
 // PlayersSearchResponse is the response from the /players/search endpoint
 type PlayersSquadsResponse struct {
-	Get        string      `json:"get"`
-	Parameters interface{} `json:"parameters"`
-	Errors     interface{} `json:"errors"`
-	Results    int         `json:"results"`
-	Paging     Pagination  `json:"paging"`
+	Get        string     `json:"get"`
+	Parameters any        `json:"parameters"`
+	Errors     any        `json:"errors"`
+	Results    int        `json:"results"`
+	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Team struct {
 			ID   int    `json:"id"`
@@ -144,9 +144,9 @@ type PlayersTopResponse struct {
 		League string `json:"league"`
 		Season string `json:"season"`
 	} `json:"parameters"`
-	Errors   []interface{} `json:"errors"`
-	Results  int           `json:"results"`
-	Paging   Pagination    `json:"paging"`
+	Errors   []any      `json:"errors"`
+	Results  int        `json:"results"`
+	Paging   Pagination `json:"paging"`
 	Response []struct {
 		Player struct {
 			ID        int    `json:"id"`

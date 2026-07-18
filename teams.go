@@ -34,7 +34,7 @@ const (
 	At least one of the following parameters must be passed
 */
 func (c *Client) Teams(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.TeamsResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, teamsEndpoint)
 	body, err := c.get(
@@ -71,7 +71,7 @@ func (c *Client) Teams(
 	  The limit date. Value format: 2020-12-01
 */
 func (c *Client) TeamsStatistics(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.TeamsStatisticsResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, teamsStatisticsEndpoint)
 	body, err := c.get(

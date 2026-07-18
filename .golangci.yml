@@ -1,81 +1,28 @@
 version: "2"
 
 run:
-  timeout: 5m
   go: "1.22"
 
-linters-settings:
-  errcheck:
-    check-type-assertions: true
-    check-blank: true
-
-  goconst:
-    min-len: 2
-    min-occurrences: 2
-
-  gocritic:
-    enabled-tags:
-      - diagnostic
-      - experimental
-      - opinionated
-      - performance
-      - style
-    disabled-checks:
-      - dupImport
-      - ifElseChain
-      - octalLiteral
-      - whyNoLint
-
-  gocyclo:
-    min-complexity: 15
-
-  mnd:
-    checks:
-      - argument
-      - case
-      - condition
-      - return
-
-  govet:
-    settings:
-      printf:
-        funcs:
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
-          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
-
-  lll:
-    line-length: 140
-
-  misspell:
-    locale: US
-
-  nolintlint:
-    allow-unused: false
-    require-explanation: false
-    require-specific: false
-
 linters:
-  disable-all: true
+  default: none
   enable:
     - bodyclose
+    - copyloopvar
     - dogsled
     - dupl
     - errcheck
-    - copyloopvar
     - exhaustive
     - funlen
     - gochecknoinits
     - goconst
     - gocritic
     - gocyclo
-    - mnd
     - goprintffuncname
     - gosec
     - govet
     - ineffassign
     - lll
+    - mnd
     - nakedret
     - noctx
     - nolintlint
@@ -85,31 +32,59 @@ linters:
     - unparam
     - unused
     - whitespace
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+      exclude-functions:
+        - (io.ReadCloser).Close
+    goconst:
+      min-len: 2
+      min-occurrences: 2
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+      disabled-checks:
+        - dupImport
+        - ifElseChain
+        - octalLiteral
+        - whyNoLint
+    gocyclo:
+      min-complexity: 15
+    lll:
+      line-length: 140
+    mnd:
+      checks:
+        - argument
+        - case
+        - condition
+        - return
+    nolintlint:
+      allow-unused: false
+      require-explanation: false
+      require-specific: false
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - mnd
+          - funlen
+          - gocyclo
+          - dupl
+          - goconst
+      # The models package mirrors the API's response schemas, which contain
+      # legitimately near-identical exported structs.
+      - path: ^models/
+        linters:
+          - dupl
+      - linters:
+          - gocritic
+        text: "unnecessaryDefer:"
 
 issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - mnd
-        - funlen
-        - gocyclo
-
-    - linters:
-        - gocritic
-      text: "unnecessaryDefer:"
-
-    - linters:
-        - misspell
-      text: "commited.*json.*commited"
-    - linters:
-        - misspell
-      text: "appearences.*json.*appearences"
-
-  exclude-use-default: false
-  exclude-case-sensitive: false
-
-  include:
-    - EXC0002
-
   max-issues-per-linter: 0
   max-same-issues: 0

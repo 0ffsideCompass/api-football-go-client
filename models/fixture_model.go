@@ -90,9 +90,9 @@ type FixturesByDateResp struct {
 		Season string `json:"season"`
 		To     string `json:"to"`
 	} `json:"parameters"`
-	Errors   interface{} `json:"errors"`
-	Results  int         `json:"results"`
-	Paging   Pagination  `json:"paging"`
+	Errors   any        `json:"errors"`
+	Results  int        `json:"results"`
+	Paging   Pagination `json:"paging"`
 	Response []struct {
 		Fixture struct {
 			ID        int       `json:"id"`

@@ -15,7 +15,7 @@ import (
 func TestFixturesLineups(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -23,7 +23,7 @@ func TestFixturesLineups(t *testing.T) {
 	}{
 		{
 			name:   "successful fixtures lineups request",
-			params: map[string]interface{}{"fixture": 12345},
+			params: map[string]any{"fixture": 12345},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33, "name": "Manchester United"}, "formation": "4-3-3"}
@@ -37,7 +37,7 @@ func TestFixturesLineups(t *testing.T) {
 		},
 		{
 			name:          "fixtures lineups request with API error",
-			params:        map[string]interface{}{"fixture": -1},
+			params:        map[string]any{"fixture": -1},
 			responseBody:  `{"error": "Invalid fixture ID"}`,
 			statusCode:    http.StatusBadRequest,
 			expectError:   true,
@@ -45,7 +45,7 @@ func TestFixturesLineups(t *testing.T) {
 		},
 		{
 			name:          "fixtures lineups request with invalid JSON response",
-			params:        map[string]interface{}{"fixture": 12345},
+			params:        map[string]any{"fixture": 12345},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -82,7 +82,7 @@ func TestFixturesLineups(t *testing.T) {
 func TestFixturesEvents(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -90,7 +90,7 @@ func TestFixturesEvents(t *testing.T) {
 	}{
 		{
 			name:   "successful fixtures events request",
-			params: map[string]interface{}{"fixture": 12345},
+			params: map[string]any{"fixture": 12345},
 			responseBody: `{
 				"response": [
 					{"time": {"elapsed": 15}, "team": {"id": 33}, "type": "Goal"}
@@ -104,7 +104,7 @@ func TestFixturesEvents(t *testing.T) {
 		},
 		{
 			name:          "fixtures events request with invalid JSON response",
-			params:        map[string]interface{}{"fixture": 12345},
+			params:        map[string]any{"fixture": 12345},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -141,7 +141,7 @@ func TestFixturesEvents(t *testing.T) {
 func TestFixture(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -149,7 +149,7 @@ func TestFixture(t *testing.T) {
 	}{
 		{
 			name:   "successful fixture request",
-			params: map[string]interface{}{"id": 12345},
+			params: map[string]any{"id": 12345},
 			responseBody: `{
 				"response": [
 					{"fixture": {"id": 12345, "date": "2023-01-01T15:00:00Z"}}
@@ -163,7 +163,7 @@ func TestFixture(t *testing.T) {
 		},
 		{
 			name:   "fixture request with date range",
-			params: map[string]interface{}{"from": "2023-01-01", "to": "2023-01-31"},
+			params: map[string]any{"from": "2023-01-01", "to": "2023-01-31"},
 			responseBody: `{
 				"response": [
 					{"fixture": {"id": 12345, "date": "2023-01-15T15:00:00Z"}}
@@ -177,7 +177,7 @@ func TestFixture(t *testing.T) {
 		},
 		{
 			name:          "fixture request with invalid JSON response",
-			params:        map[string]interface{}{"id": 12345},
+			params:        map[string]any{"id": 12345},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -214,7 +214,7 @@ func TestFixture(t *testing.T) {
 func TestFixtureHeadToHead(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -222,7 +222,7 @@ func TestFixtureHeadToHead(t *testing.T) {
 	}{
 		{
 			name:   "successful head to head request",
-			params: map[string]interface{}{"h2h": "33-34"},
+			params: map[string]any{"h2h": "33-34"},
 			responseBody: `{
 				"response": [
 					{"fixture": {"id": 12345}, "teams": {"home": {"id": 33}, "away": {"id": 34}}}
@@ -236,7 +236,7 @@ func TestFixtureHeadToHead(t *testing.T) {
 		},
 		{
 			name:          "head to head request with invalid JSON response",
-			params:        map[string]interface{}{"h2h": "33-34"},
+			params:        map[string]any{"h2h": "33-34"},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -344,7 +344,7 @@ func TestFixtureByDateAndLeague(t *testing.T) {
 func TestFixtureStatistics(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -352,7 +352,7 @@ func TestFixtureStatistics(t *testing.T) {
 	}{
 		{
 			name:   "successful fixture statistics request",
-			params: map[string]interface{}{"fixture": 12345},
+			params: map[string]any{"fixture": 12345},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33}, "statistics": [{"type": "Shots on Goal", "value": 5}]}
@@ -366,7 +366,7 @@ func TestFixtureStatistics(t *testing.T) {
 		},
 		{
 			name:          "fixture statistics request with invalid JSON response",
-			params:        map[string]interface{}{"fixture": 12345},
+			params:        map[string]any{"fixture": 12345},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,
@@ -403,7 +403,7 @@ func TestFixtureStatistics(t *testing.T) {
 func TestFixturesPlayer(t *testing.T) {
 	tests := []struct {
 		name          string
-		params        map[string]interface{}
+		params        map[string]any
 		responseBody  string
 		statusCode    int
 		expectError   bool
@@ -411,7 +411,7 @@ func TestFixturesPlayer(t *testing.T) {
 	}{
 		{
 			name:   "successful fixtures player request",
-			params: map[string]interface{}{"fixture": 12345, "team": 33},
+			params: map[string]any{"fixture": 12345, "team": 33},
 			responseBody: `{
 				"response": [
 					{"team": {"id": 33}, "players": [{"player": {"id": 276}}]}
@@ -425,7 +425,7 @@ func TestFixturesPlayer(t *testing.T) {
 		},
 		{
 			name:          "fixtures player request with invalid JSON response",
-			params:        map[string]interface{}{"fixture": 12345, "team": 33},
+			params:        map[string]any{"fixture": 12345, "team": 33},
 			responseBody:  `{"invalid": json}`,
 			statusCode:    http.StatusOK,
 			expectError:   true,

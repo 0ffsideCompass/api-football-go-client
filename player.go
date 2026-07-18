@@ -23,7 +23,7 @@ const (
 	  The ID of the player. Value format: 85
 */
 func (c *Client) PlayersSeasons(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersSeasonsResponse, error) {
 	// Validate the parameters
 	if _, hasPlayer := params["player"]; !hasPlayer {
@@ -73,7 +73,7 @@ func (c *Client) PlayersSeasons(
 */
 
 func (c *Client) Players(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersEndpoint)
 	body, err := c.get(
@@ -107,7 +107,7 @@ func (c *Client) Players(
 */
 
 func (c *Client) PlayersSquads(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersSquadsResponse, error) {
 	// Team parameter is required
 	_, ok := params["team"].(int)
@@ -153,7 +153,7 @@ func (c *Client) PlayersSquads(
 	  The year of the season. Value format: 2020
 */
 func (c *Client) PlayersTopScorers(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersTopResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopScorersEndpoint)
 	body, err := c.get(
@@ -186,7 +186,7 @@ func (c *Client) PlayersTopScorers(
 	  The year of the season. Value format: 2020
 */
 func (c *Client) PlayersTopAssists(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersTopResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopAssistsEndpoint)
 	body, err := c.get(
@@ -219,7 +219,7 @@ func (c *Client) PlayersTopAssists(
 	  The year of the season. Value format: 2020
 */
 func (c *Client) PlayersTopYellowCards(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersTopResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopYellowCardsEndpoint)
 	body, err := c.get(
@@ -252,7 +252,7 @@ func (c *Client) PlayersTopYellowCards(
 	  The year of the season. Value format: 2020
 */
 func (c *Client) PlayersTopRedCards(
-	params map[string]interface{},
+	params map[string]any,
 ) (*models.PlayersTopResponse, error) {
 	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTopRedCardsEndpoint)
 	body, err := c.get(
