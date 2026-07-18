@@ -73,6 +73,23 @@ func ExampleClient_FixtureByDateAndLeague() {
 	fmt.Println(fixtures.Results)
 }
 
+func ExampleClient_Predictions() {
+	cli, err := client.New("YOUR_API_KEY", &http.Client{Timeout: 10 * time.Second})
+	if err != nil {
+		log.Fatalf("creating client: %v", err)
+	}
+
+	predictions, err := cli.Predictions(map[string]any{"fixture": 198772})
+	if err != nil {
+		log.Fatalf("fetching predictions: %v", err)
+	}
+
+	for i := range predictions.Response {
+		p := &predictions.Response[i].Predictions
+		fmt.Printf("%s: %s\n", p.Winner.Name, p.Advice)
+	}
+}
+
 func ExampleClient_Search() {
 	cli, err := client.New("YOUR_API_KEY", &http.Client{Timeout: 10 * time.Second})
 	if err != nil {

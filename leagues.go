@@ -8,8 +8,8 @@ import (
 )
 
 const (
-	leaguesEndpoint       = "leagues"
-	leagueSeasonsEndpoint = "leagueSeasons"
+	leaguesEndpoint        = "leagues"
+	leaguesSeasonsEndpoint = "leagues/seasons"
 )
 
 // Leagues returns all leagues
@@ -54,6 +54,26 @@ func (c *Client) Leagues(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"error unmarshalling leagues response: %w",
+			err,
+		)
+	}
+	return &resp, nil
+}
+
+// LeaguesSeasons hits the /leagues/seasons endpoint. It returns the list of
+// available seasons as 4-digit years. This endpoint takes no parameters.
+func (c *Client) LeaguesSeasons() (*models.SeasonsResponse, error) {
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, leaguesSeasonsEndpoint)
+	body, err := c.get(endpointURL)
+	if err != nil {
+		return nil, fmt.Errorf("error getting leagues seasons: %w", err)
+	}
+
+	var resp models.SeasonsResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling leagues seasons response: %w",
 			err,
 		)
 	}

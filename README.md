@@ -12,7 +12,7 @@ A simple, intuitive, and comprehensive Go client library for interacting with th
 
 ## Features
 
-- **Clean & Simple API:** Access various endpoints (Coachs, Fixtures, Injuries, Leagues, Players, Sidelined, Standings, Teams, Transfers, Trophies, Venues) with intuitive methods.
+- **Complete Endpoint Coverage:** Every API-Football v3 endpoint is supported — Coachs, Countries, Fixtures, Injuries, Leagues, Odds (pre-match and in-play), Players, Predictions, Sidelined, Standings, Teams, Timezone, Transfers, Trophies, and Venues.
 - **Dynamic Query Parameters:** Pass custom filters and options via maps for flexible querying.
 - **Customizable HTTP Client:** Inject your own `http.Client` for advanced configurations or testing purposes.
 - **Wrapped Errors:** Non-2xx responses and JSON decoding failures are returned as wrapped errors to simplify debugging (see [Error Handling](#error-handling) for a caveat about API-level errors).
@@ -90,6 +90,7 @@ This client supports multiple endpoints. Below is an overview of some key method
 ### Fixtures
 - **Methods:** 
   - `Fixture` – Get fixtures with flexible filtering (by id, league, season, date, etc.).
+  - `FixturesRounds` – Get the rounds of a league (optionally with dates).
   - `FixturesLineups` – Get lineups for a given fixture.
   - `FixturesEvents` – Retrieve events for a fixture.
   - `FixtureHeadToHead` – Get head-to-head stats between teams.
@@ -103,13 +104,31 @@ This client supports multiple endpoints. Below is an overview of some key method
 
 ### Leagues
 - **Description:** Retrieves league information with filters for `id`, `name`, `season`, `country`, etc.
+- **Methods:** `Leagues`, `LeaguesSeasons` (list of available 4-digit seasons).
+
+### Predictions
+- **Description:** Retrieves predictions for a fixture, including both teams' form, comparative statistics, and head-to-head history.
+- **Parameters:** Requires `fixture`.
+
+### Odds
+- **Methods:**
+  - `Odds` – Pre-match odds (filter by `fixture`, `league`, `season`, `date`, `bookmaker`, `bet`, `page`).
+  - `OddsMapping` – Fixture IDs with available pre-match odds.
+  - `OddsBookmakers` / `OddsBets` – Available bookmakers and bet types.
+  - `OddsLive` – In-play odds for fixtures in progress.
+  - `OddsLiveBets` – Available bet types for in-play odds.
+
+### Countries & Timezone
+- **Methods:** `Countries` (filter by `name`, `code`, `search`), `Timezone` (no parameters).
 
 ### Players
 - **Description:** Retrieve player details, seasons, squads, and top performance metrics.
 - **Methods:** 
   - `PlayersSeasons`
   - `Players`
+  - `PlayersProfiles`
   - `PlayersSquads`
+  - `PlayersTeams`
   - `PlayersTopScorers`
   - `PlayersTopAssists`
   - `PlayersTopYellowCards`
@@ -124,6 +143,8 @@ This client supports multiple endpoints. Below is an overview of some key method
 - **Methods:**
   - `Teams`
   - `TeamsStatistics`
+  - `TeamsSeasons`
+  - `TeamsCountries`
 
 ### Transfers, Trophies, Venues, Sidelined
 - **Description:** Access data related to player transfers, trophies, venue information, and sidelined players/coaches.
@@ -134,10 +155,6 @@ This client supports multiple endpoints. Below is an overview of some key method
 - **Note:** Returns the raw JSON response body (`[]byte`) rather than a typed model. Queries must be at least 3 characters (4 for players).
 
 For detailed usage of each method, refer to the [package documentation](https://pkg.go.dev/github.com/0ffsideCompass/api-football-go-client) or the inline comments within the code.
-
-### Not Yet Supported
-
-The following API-Football endpoints are not covered yet: `predictions`, `odds`, `countries`, `seasons`, `timezone`, and `fixtures/rounds`. Contributions are welcome!
 
 ## Contributing
 

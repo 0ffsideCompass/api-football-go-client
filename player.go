@@ -15,6 +15,8 @@ const (
 	playersTopAssistsEndpoint     = "players/topassists"
 	playersTopYellowCardsEndpoint = "players/topyellowcards"
 	playersTopRedCardsEndpoint    = "players/topredcards"
+	playersProfilesEndpoint       = "players/profiles"
+	playersTeamsEndpoint          = "players/teams"
 )
 
 // PlayersSeasons returns the seasons for a given player
@@ -270,6 +272,77 @@ func (c *Client) PlayersTopRedCards(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"error unmarshalling players top red cards response: %w",
+			err,
+		)
+	}
+
+	return &resp, nil
+}
+
+// PlayersProfiles returns players' profile information.
+/*
+	- player (Type: integer)
+	  The ID of the player. Value format: 276
+	- search (Type: string) (>= 3 characters)
+	  The lastname of the player. Value format: Neymar
+	- page (Type: integer)
+	  Use for pagination. Value format: 1
+*/
+func (c *Client) PlayersProfiles(
+	params map[string]any,
+) (*models.PlayersProfilesResponse, error) {
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersProfilesEndpoint)
+	body, err := c.get(
+		c.buildURL(
+			endpointURL,
+			params,
+		),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("error getting players profiles: %w", err)
+	}
+
+	var resp models.PlayersProfilesResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling players profiles response: %w",
+			err,
+		)
+	}
+
+	return &resp, nil
+}
+
+// PlayersTeams returns the list of teams and seasons in which a player played.
+/*
+	- player (Type: integer) (Required)
+	  The ID of the player. Value format: 276
+*/
+func (c *Client) PlayersTeams(
+	params map[string]any,
+) (*models.PlayersTeamsResponse, error) {
+	// Validate the parameters
+	if err := requireIntParams(params, "player"); err != nil {
+		return nil, err
+	}
+
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, playersTeamsEndpoint)
+	body, err := c.get(
+		c.buildURL(
+			endpointURL,
+			params,
+		),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("error getting players teams: %w", err)
+	}
+
+	var resp models.PlayersTeamsResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling players teams response: %w",
 			err,
 		)
 	}

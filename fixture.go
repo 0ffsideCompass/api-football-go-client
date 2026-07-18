@@ -11,7 +11,7 @@ import (
 const (
 	fixturesByDateEndpoint    = "fixtures?league=%d&season=%d&from=%s&to=%s"
 	fixtureHeadToHeadEndpoint = "fixtures/headtohead"
-	fixtureRounds             = "fixtures/rounds?league=%d&season=%d" // TODO: not implemented yet
+	fixtureRoundsEndpoint     = "fixtures/rounds"
 	fixtureEndpoint           = "fixtures"
 	fixtureStatisticsEndpoint = "fixtures/statistics"
 	fixturesEventsEndpoint    = "fixtures/events"
@@ -47,6 +47,49 @@ func (c *Client) FixturesLineups(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"error unmarshalling fixtures lineups response: %w",
+			err,
+		)
+	}
+	return &resp, nil
+}
+
+// FixturesRounds returns the rounds of a league for a given season.
+/*
+	- league: (Type: integer) (Required)
+	  The ID of the league. Value format: 39
+	- season: (Type: integer) (Required) (should be 4 digits)
+	  The season of the league. Value format: 2019
+	- current: (Type: string) Enum: (true, false)
+	  Return the current round only. Value format: "true"
+	- dates: (Type: string) Enum: (true, false)
+	  Add the dates of each round in the response. Value format: "true"
+	- timezone: (Type: string)
+	  A valid timezone from the Timezone endpoint. Value format: Europe/London
+*/
+func (c *Client) FixturesRounds(
+	params map[string]any,
+) (*models.FixturesRoundsResponse, error) {
+	// Validate the parameters
+	if err := requireIntParams(params, "league", "season"); err != nil {
+		return nil, err
+	}
+
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, fixtureRoundsEndpoint)
+	body, err := c.get(
+		c.buildURL(
+			endpointURL,
+			params,
+		),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("error getting fixtures rounds: %w", err)
+	}
+
+	var resp models.FixturesRoundsResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling fixtures rounds response: %w",
 			err,
 		)
 	}

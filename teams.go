@@ -10,6 +10,8 @@ import (
 const (
 	teamsEndpoint           = "teams"
 	teamsStatisticsEndpoint = "teams/statistics"
+	teamsSeasonsEndpoint    = "teams/seasons"
+	teamsCountriesEndpoint  = "teams/countries"
 )
 
 // Teams hits the /teams endpoint
@@ -89,6 +91,65 @@ func (c *Client) TeamsStatistics(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"error unmarshalling teams statistics response: %w",
+			err,
+		)
+	}
+
+	return &resp, nil
+}
+
+// TeamsSeasons hits the /teams/seasons endpoint. It returns the list of
+// seasons available for a team as 4-digit years.
+/*
+	- team: (Type: integer) (Required)
+	  The ID of the team. Value format: 33
+*/
+func (c *Client) TeamsSeasons(
+	params map[string]any,
+) (*models.SeasonsResponse, error) {
+	// Validate the parameters
+	if err := requireIntParams(params, "team"); err != nil {
+		return nil, err
+	}
+
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, teamsSeasonsEndpoint)
+	body, err := c.get(
+		c.buildURL(
+			endpointURL,
+			params,
+		),
+	)
+	if err != nil {
+		return nil, fmt.Errorf("error getting teams seasons: %w", err)
+	}
+
+	var resp models.SeasonsResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling teams seasons response: %w",
+			err,
+		)
+	}
+
+	return &resp, nil
+}
+
+// TeamsCountries hits the /teams/countries endpoint. It returns the list of
+// countries available for the teams endpoint. This endpoint takes no
+// parameters.
+func (c *Client) TeamsCountries() (*models.CountriesResponse, error) {
+	endpointURL := fmt.Sprintf("%s%s", c.Domain, teamsCountriesEndpoint)
+	body, err := c.get(endpointURL)
+	if err != nil {
+		return nil, fmt.Errorf("error getting teams countries: %w", err)
+	}
+
+	var resp models.CountriesResponse
+	err = json.Unmarshal(body, &resp)
+	if err != nil {
+		return nil, fmt.Errorf(
+			"error unmarshalling teams countries response: %w",
 			err,
 		)
 	}
