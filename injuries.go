@@ -69,21 +69,26 @@ func (c *Client) Injuries(
 func validateInjuriesParams(params map[string]any) error {
 	// Validate integer parameters. Values may arrive as int (Go callers) or
 	// float64 (values decoded from JSON).
-	for _, key := range []string{"league", "fixture", "team", "player"} {
-		value, ok := params[key]
+	intParams := []struct {
+		key         string
+		needsSeason bool
+	}{
+		{key: "league", needsSeason: true},
+		{key: "fixture", needsSeason: false},
+		{key: "team", needsSeason: true},
+		{key: "player", needsSeason: true},
+	}
+	for _, p := range intParams {
+		value, ok := params[p.key]
 		if !ok {
 			continue
 		}
 		if _, err := asInt(value); err != nil {
-			return fmt.Errorf("'%s' must be an integer", key)
+			return fmt.Errorf("'%s' must be an integer", p.key)
 		}
-	}
-
-	// 'season' is required when any of these parameters is provided
-	for _, key := range []string{"league", "team", "player"} {
-		if _, ok := params[key]; ok {
+		if p.needsSeason {
 			if _, hasSeason := params["season"]; !hasSeason {
-				return fmt.Errorf("'season' is required when '%s' is provided", key)
+				return fmt.Errorf("'season' is required when '%s' is provided", p.key)
 			}
 		}
 	}

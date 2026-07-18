@@ -53,12 +53,15 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: 'stable'
+        # Must not be newer than the Go version golangci-lint was built with
+        # (v2.12.2 is built with go1.26), or its type-checker panics.
+        # Bump these two versions together.
+        go-version: '1.26'
 
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v8
       with:
-        version: v2.8.0
+        version: v2.12.2
         args: --timeout=5m
 
   format:
