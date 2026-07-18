@@ -5,8 +5,10 @@ import (
 	"net/url"
 )
 
+// Type identifies the kind of entity a Search call looks up.
 type Type string
 
+// The entity kinds supported by Search.
 const (
 	Team   Type = "team"
 	League Type = "league"
@@ -19,7 +21,12 @@ func (t Type) String() string {
 }
 
 // Search queries the /teams, /leagues, or /players endpoint by name,
-// depending on the given Type, and returns the raw response body.
+// depending on the given Type, and returns the raw JSON response body.
+// Unlike the other methods it does not unmarshal into a typed model.
+//
+// Note: the API requires search queries to be at least 3 characters
+// (4 for players), and player searches may additionally require a league
+// or team filter; such errors are reported in the response body.
 func (c *Client) Search(q string, t Type) ([]byte, error) {
 	values := url.Values{}
 	values.Set("search", q)

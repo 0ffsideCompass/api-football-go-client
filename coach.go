@@ -14,15 +14,15 @@ const (
 	minSearchLength = 3
 )
 
-// Coachs hits the /coachs endpoint
+// Coachs hits the /coachs endpoint.
+// At least one of the following parameters must be passed:
 /*
 	- team: (Type: integer)
 	  The ID of the team. Value format: 85
 	- id: (Type: integer)
 	  The ID of the coach. Value format: 85
-	- search: (Type: string)
-	  The name of the coach. Value format: "John Doe" must be >= 3 characters
-	one of the following parameters must be passed
+	- search: (Type: string) (must be >= 3 characters)
+	  The name of the coach. Value format: "John Doe"
 */
 func (c *Client) Coachs(
 	params map[string]any,

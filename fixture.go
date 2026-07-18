@@ -135,8 +135,6 @@ func (c *Client) FixturesEvents(
 
 - venue: (Type: integer)
   The venue ID of the fixture.
-
-==================================================================================
 */
 func (c *Client) Fixture(
 	params map[string]any,
@@ -211,7 +209,9 @@ func (c *Client) FixtureHeadToHead(
 	return &resp, nil
 }
 
-// FixtureByDateAndLeague returns all fixtures for a given date and league
+// FixtureByDateAndLeague returns all fixtures for the given league and season
+// that take place between fromDate and toDate (inclusive). Only the date part
+// of fromDate and toDate is used.
 func (c *Client) FixtureByDateAndLeague(
 	leagueID,
 	season int,

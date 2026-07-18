@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// StandingsResponse is the response from the /standings endpoint.
 type StandingsResponse struct {
 	Get        string     `json:"get"`
 	Parameters any        `json:"parameters"`

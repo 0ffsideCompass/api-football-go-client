@@ -12,11 +12,11 @@ A simple, intuitive, and comprehensive Go client library for interacting with th
 
 ## Features
 
-- **Clean & Simple API:** Access various endpoints (Coachs, Fixtures, Injuries, Leagues, Players, Standings, Teams, Transfers, Trophies, Venues, etc.) with intuitive methods.
+- **Clean & Simple API:** Access various endpoints (Coachs, Fixtures, Injuries, Leagues, Players, Sidelined, Standings, Teams, Transfers, Trophies, Venues) with intuitive methods.
 - **Dynamic Query Parameters:** Pass custom filters and options via maps for flexible querying.
 - **Customizable HTTP Client:** Inject your own `http.Client` for advanced configurations or testing purposes.
-- **Robust Error Handling:** Clear error messages with wrapped errors to simplify debugging.
-- **Comprehensive Documentation:** Inline comments and examples to help you get started quickly.
+- **Wrapped Errors:** Non-2xx responses and JSON decoding failures are returned as wrapped errors to simplify debugging (see [Error Handling](#error-handling) for a caveat about API-level errors).
+- **Works with Both API Providers:** Compatible with the direct api-sports.io API and the RapidAPI gateway (see [Authentication](#authentication)).
 
 ## Installation
 
@@ -25,14 +25,6 @@ Use `go get` to install the package:
 ```bash
 go get github.com/0ffsideCompass/api-football-go-client
 ```
-
-Or add it to your `go.mod` file:
-
-```go
-require github.com/0ffsideCompass/api-football-go-client vX.Y.Z
-```
-
-Replace `vX.Y.Z` with the current version.
 
 ## Quick Start
 
@@ -73,6 +65,19 @@ func main() {
     fmt.Printf("Leagues: %+v\n", leagues)
 }
 ```
+
+## Authentication
+
+The client sends both authentication headers on every request, so it works with either provider without configuration:
+
+- **Direct API** (`https://v3.football.api-sports.io/`, the default domain): authenticated via the `x-apisports-key` header, using the API key from your [api-football.com](https://www.api-football.com/) dashboard.
+- **RapidAPI**: use `client.NewWithDomain` with the RapidAPI base URL (`https://api-football-v1.p.rapidapi.com/v3/`) and your RapidAPI key, which is sent via the `X-RapidAPI-Key` header.
+
+## Error Handling
+
+Methods return an error for failed requests (non-2xx status codes, including the response body for context) and for responses that cannot be decoded.
+
+**Caveat:** API-Football reports some failures — invalid parameters, exceeded rate limits — inside the response body of a `200 OK` response. The client does not currently inspect that field, so such calls return an empty result rather than an error. Check the `Errors` field on the response model if you need to distinguish "no data" from "bad request".
 
 ## Endpoints Documentation
 
@@ -120,14 +125,19 @@ This client supports multiple endpoints. Below is an overview of some key method
   - `Teams`
   - `TeamsStatistics`
 
-### Transfers, Trophies, Venues
-- **Description:** Access data related to player transfers, trophies, and venue information.
+### Transfers, Trophies, Venues, Sidelined
+- **Description:** Access data related to player transfers, trophies, venue information, and sidelined players/coaches.
 
 ### Search
 - **Description:** A generic search function for teams, leagues, or players.
 - **Usage:** `Search(query string, t Type)` where `Type` is one of `Team`, `League`, or `Player`.
+- **Note:** Returns the raw JSON response body (`[]byte`) rather than a typed model. Queries must be at least 3 characters (4 for players).
 
-For detailed usage of each method, refer to the inline comments within the code.
+For detailed usage of each method, refer to the [package documentation](https://pkg.go.dev/github.com/0ffsideCompass/api-football-go-client) or the inline comments within the code.
+
+### Not Yet Supported
+
+The following API-Football endpoints are not covered yet: `predictions`, `odds`, `countries`, `seasons`, `timezone`, and `fixtures/rounds`. Contributions are welcome!
 
 ## Contributing
 

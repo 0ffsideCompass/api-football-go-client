@@ -2,6 +2,7 @@ package models
 
 import "time"
 
+// FixtureHeadToHeadResp is the response from the /fixtures/headtohead endpoint.
 type FixtureHeadToHeadResp struct {
 	Get        string `json:"get"`
 	Parameters struct {
@@ -13,6 +14,7 @@ type FixtureHeadToHeadResp struct {
 	Response []FixtureResp `json:"response"`
 }
 
+// FixtureResp is a single fixture entry as returned by the fixtures endpoints.
 type FixtureResp struct {
 	Fixture struct {
 		ID        int       `json:"id"`
@@ -82,6 +84,8 @@ type FixtureResp struct {
 	} `json:"score"`
 }
 
+// FixturesByDateResp is the response from the /fixtures endpoint when
+// querying by league, season, and date range.
 type FixturesByDateResp struct {
 	Get        string `json:"get"`
 	Parameters struct {
