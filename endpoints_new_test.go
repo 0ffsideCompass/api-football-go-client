@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	client "github.com/0ffsideCompass/api-football-go-client"
+	"github.com/0ffsideCompass/api-football-go-client/models"
 )
 
 func newTestClient(t *testing.T, body string) *client.Client {
@@ -328,7 +329,7 @@ func TestPredictionsUnmarshal(t *testing.T) {
 	assert.Equal(t, "45%", item.Predictions.Percent.Home)
 	assert.Equal(t, 13, item.Teams.Home.League.Fixtures.Played.Total)
 	assert.Equal(t, "1.2", item.Teams.Home.League.Goals.For.Average.Home)
-	assert.Equal(t, 0.6, item.Teams.Home.Last5.Goals.For.Average)
+	assert.Equal(t, models.FlexString("0.6"), item.Teams.Home.Last5.Goals.For.Average)
 	assert.Equal(t, "75%", item.Comparison.PoissonDistribution.Home)
 	assert.Len(t, item.H2H, 1)
 	assert.Equal(t, 198706, item.H2H[0].Fixture.ID)

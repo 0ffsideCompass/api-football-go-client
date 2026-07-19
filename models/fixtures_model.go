@@ -16,8 +16,8 @@ type FixturesStatisticsResponse struct {
 			Logo string `json:"logo"`
 		} `json:"team"`
 		Statistics []struct {
-			Type  string `json:"type"`
-			Value int    `json:"value"`
+			Type  string     `json:"type"`
+			Value FlexString `json:"value"`
 		} `json:"statistics"`
 	} `json:"response"`
 }
@@ -146,8 +146,8 @@ type FixturesResponse struct {
 				Logo string `json:"logo"`
 			} `json:"team"`
 			Statistics []struct {
-				Type  string `json:"type"`
-				Value string `json:"value"`
+				Type  string     `json:"type"`
+				Value FlexString `json:"value"`
 			} `json:"statistics"`
 		} `json:"statistics"`
 		Players []struct {
@@ -222,8 +222,8 @@ type FixturesResponse struct {
 		} `json:"players"`
 		Events []struct {
 			Time struct {
-				Elapsed int    `json:"elapsed"`
-				Extra   string `json:"extra"`
+				Elapsed int        `json:"elapsed"`
+				Extra   FlexString `json:"extra"`
 			} `json:"time"`
 			Team struct {
 				ID   int    `json:"id"`
@@ -254,8 +254,8 @@ type FixturesEventsResponse struct {
 	Paging     Pagination `json:"paging"`
 	Response   []struct {
 		Time struct {
-			Elapsed int    `json:"elapsed"`
-			Extra   string `json:"extra"`
+			Elapsed int        `json:"elapsed"`
+			Extra   FlexString `json:"extra"`
 		} `json:"time"`
 		Team struct {
 			ID   int    `json:"id"`
@@ -288,7 +288,18 @@ type FixturesLineupsResponse struct {
 			ID     int    `json:"id"`
 			Name   string `json:"name"`
 			Logo   string `json:"logo"`
-			Colors string `json:"colors"`
+			Colors struct {
+				Player struct {
+					Primary string `json:"primary"`
+					Number  string `json:"number"`
+					Border  string `json:"border"`
+				} `json:"player"`
+				Goalkeeper struct {
+					Primary string `json:"primary"`
+					Number  string `json:"number"`
+					Border  string `json:"border"`
+				} `json:"goalkeeper"`
+			} `json:"colors"`
 		} `json:"team"`
 		Coach struct {
 			ID    int    `json:"id"`

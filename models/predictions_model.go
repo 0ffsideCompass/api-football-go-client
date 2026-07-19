@@ -12,12 +12,12 @@ type PredictionTeam struct {
 		Def   string `json:"def"`
 		Goals struct {
 			For struct {
-				Total   int     `json:"total"`
-				Average float64 `json:"average"`
+				Total   int        `json:"total"`
+				Average FlexString `json:"average"`
 			} `json:"for"`
 			Against struct {
-				Total   int     `json:"total"`
-				Average float64 `json:"average"`
+				Total   int        `json:"total"`
+				Average FlexString `json:"average"`
 			} `json:"against"`
 		} `json:"goals"`
 	} `json:"last_5"`

@@ -46,6 +46,20 @@ func TestBuildURL(t *testing.T) {
 			},
 			expectedQuery: "search=Manchester+United",
 		},
+		{
+			name: "whole float64 params render as integers, not scientific notation",
+			params: map[string]any{
+				"id": float64(1581037),
+			},
+			expectedQuery: "id=1581037",
+		},
+		{
+			name: "fractional float64 params keep their decimals",
+			params: map[string]any{
+				"x": 2.5,
+			},
+			expectedQuery: "x=2.5",
+		},
 	}
 
 	for _, tt := range tests {

@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -100,6 +101,21 @@ func (c *Client) formatDate(t time.Time) string {
 	return t.Format(dateFormat)
 }
 
+// paramString formats a query parameter value. JSON-decoded numbers arrive as
+// float64 and must render as plain integers when whole (1581037), never in
+// scientific notation (1.581037e+06), which the API rejects.
+func paramString(value any) string {
+	switch v := value.(type) {
+	case float64:
+		if v == float64(int64(v)) {
+			return strconv.FormatInt(int64(v), 10)
+		}
+		return strconv.FormatFloat(v, 'f', -1, 64)
+	default:
+		return fmt.Sprintf("%v", v)
+	}
+}
+
 // buildURL constructs the URL with dynamic parameters using net/url
 func (c *Client) buildURL(endpoint string, params map[string]any) string {
 	u, err := url.Parse(endpoint)
@@ -109,7 +125,7 @@ func (c *Client) buildURL(endpoint string, params map[string]any) string {
 
 	values := url.Values{}
 	for key, value := range params {
-		values.Add(key, fmt.Sprintf("%v", value))
+		values.Add(key, paramString(value))
 	}
 
 	u.RawQuery = values.Encode()

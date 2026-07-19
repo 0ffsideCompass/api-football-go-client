@@ -161,6 +161,16 @@ func TestInjuriesValidation(t *testing.T) {
 			wantErr: "",
 		},
 		{
+			name:    "valid numeric string params",
+			params:  map[string]any{"fixture": "1581037"},
+			wantErr: "",
+		},
+		{
+			name:    "non-numeric string fixture",
+			params:  map[string]any{"fixture": "abc"},
+			wantErr: "'fixture' must be an integer",
+		},
+		{
 			name:    "non-integer float64 league",
 			params:  map[string]any{"league": 39.5, "season": 2023},
 			wantErr: "'league' must be an integer",

@@ -115,7 +115,10 @@ func validateInjuriesParams(params map[string]any) error {
 	return nil
 }
 
-// asInt converts an int or a whole-number float64 to int.
+// asInt converts an int, a whole-number float64, or a numeric string to int.
+// All three shapes occur in practice: Go callers pass ints, JSON-decoded
+// params arrive as float64, and callers forwarding path/query values pass
+// strings.
 func asInt(value any) (int, error) {
 	switch v := value.(type) {
 	case int:
@@ -125,6 +128,12 @@ func asInt(value any) (int, error) {
 			return 0, fmt.Errorf("not an integer")
 		}
 		return int(v), nil
+	case string:
+		n, err := strconv.Atoi(v)
+		if err != nil {
+			return 0, fmt.Errorf("not an integer")
+		}
+		return n, nil
 	default:
 		return 0, fmt.Errorf("not an integer")
 	}

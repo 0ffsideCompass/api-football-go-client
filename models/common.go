@@ -1,6 +1,36 @@
 // Package models contains the data structures for API responses from the football API.
 package models
 
+import "encoding/json"
+
+// FlexString is a string that also accepts JSON numbers and null when
+// unmarshalling. API-Football mixes value types in statistics fields — the
+// same array can contain "55%", 12, and null. Numbers keep their literal
+// form (12 becomes "12"); null becomes the empty string.
+type FlexString string
+
+// UnmarshalJSON accepts a JSON string, number, or null.
+func (f *FlexString) UnmarshalJSON(data []byte) error {
+	if string(data) == "null" {
+		*f = ""
+		return nil
+	}
+	if len(data) > 0 && data[0] == '"' {
+		var s string
+		if err := json.Unmarshal(data, &s); err != nil {
+			return err
+		}
+		*f = FlexString(s)
+		return nil
+	}
+	var n json.Number
+	if err := json.Unmarshal(data, &n); err != nil {
+		return err
+	}
+	*f = FlexString(n.String())
+	return nil
+}
+
 // MinuteStat represents statistics for a specific minute range
 type MinuteStat struct {
 	Total      int    `json:"total"`
