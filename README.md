@@ -73,6 +73,28 @@ The client sends both authentication headers on every request, so it works with 
 - **Direct API** (`https://v3.football.api-sports.io/`, the default domain): authenticated via the `x-apisports-key` header, using the API key from your [api-football.com](https://www.api-football.com/) dashboard.
 - **RapidAPI**: use `client.NewWithDomain` with the RapidAPI base URL (`https://api-football-v1.p.rapidapi.com/v3/`) and your RapidAPI key, which is sent via the `X-RapidAPI-Key` header.
 
+## Retries
+
+The client deliberately ships without built-in retry logic. Because it accepts any HTTP client implementing `Do(*http.Request)`, you can inject a retrying client such as [hashicorp/go-retryablehttp](https://github.com/hashicorp/go-retryablehttp) without any extra glue:
+
+```go
+import (
+    retryablehttp "github.com/hashicorp/go-retryablehttp"
+
+    client "github.com/0ffsideCompass/api-football-go-client"
+)
+
+retryClient := retryablehttp.NewClient()
+retryClient.RetryMax = 3
+retryClient.Logger = nil // silence per-request logging
+
+cli, err := client.New(apiKey, retryClient.StandardClient())
+```
+
+This retries transient network failures and 5xx responses with exponential backoff.
+
+**A word of caution about 429s:** API-Football enforces per-minute and per-day request quotas, and every request — including a retried one — counts against them. Blindly retrying a `429 Too Many Requests` inside the same rate window spends quota on requests that cannot succeed. If you hit 429s, back off until the next minute window rather than hammering the API.
+
 ## Error Handling
 
 Methods return an error for failed requests (non-2xx status codes, including the response body for context) and for responses that cannot be decoded.
@@ -155,6 +177,17 @@ This client supports multiple endpoints. Below is an overview of some key method
 - **Note:** Returns the raw JSON response body (`[]byte`) rather than a typed model. Queries must be at least 3 characters (4 for players).
 
 For detailed usage of each method, refer to the [package documentation](https://pkg.go.dev/github.com/0ffsideCompass/api-football-go-client) or the inline comments within the code.
+
+## Roadmap
+
+Planned improvements, roughly in priority order:
+
+1. **Surface in-body API errors** — return a typed error when the API reports failures inside a `200 OK` body (see the [Error Handling](#error-handling) caveat), so callers can distinguish "no data" from "bad request" without inspecting the envelope themselves.
+2. **Rate-limit visibility** — expose the `X-RateLimit-*` response headers so callers can track their per-minute and daily quota usage in code.
+3. **Pagination helpers** — convenience iterators for paginated endpoints (`Players`, `Odds`, `OddsMapping`) that walk `paging.current/total` automatically.
+4. **`context.Context` support and typed parameters** — breaking changes, planned for a v2 together with item 1.
+
+Contributions toward any of these are welcome.
 
 ## Contributing
 
