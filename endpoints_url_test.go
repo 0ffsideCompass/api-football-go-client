@@ -120,8 +120,8 @@ func TestRequestHeaders(t *testing.T) {
 	assert.NoError(t, err)
 
 	headers := mockClient.LastRequest.Header
-	assert.Equal(t, "test-api-key", headers.Get("X-RapidAPI-Key"))
-	assert.Equal(t, "api-football-v1.p.rapidapi.com", headers.Get("X-RapidAPI-Host"))
+	assert.Empty(t, headers.Get("X-RapidAPI-Key"))
+	assert.Empty(t, headers.Get("X-RapidAPI-Host"))
 	assert.Equal(t, "test-api-key", headers.Get("x-apisports-key"))
 }
 
@@ -142,4 +142,16 @@ func TestNewWithDomain(t *testing.T) {
 		_, err := client.NewWithDomain("key", "", &http.Client{})
 		assert.EqualError(t, err, "missing domain")
 	})
+}
+
+func TestRapidAPIRequestHeaders(t *testing.T) {
+	mockClient := newMockClient()
+	apiClient, err := client.NewWithDomain("test-api-key", "https://api-football-v1.p.rapidapi.com/v3/", mockClient)
+	assert.NoError(t, err)
+	_, err = apiClient.Leagues(nil)
+	assert.NoError(t, err)
+	headers := mockClient.LastRequest.Header
+	assert.Equal(t, "test-api-key", headers.Get("X-RapidAPI-Key"))
+	assert.Equal(t, "api-football-v1.p.rapidapi.com", headers.Get("X-RapidAPI-Host"))
+	assert.Empty(t, headers.Get("x-apisports-key"))
 }
