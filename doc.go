@@ -16,7 +16,7 @@
 // By default requests go to the direct API at https://v3.football.api-sports.io/,
 // authenticated with the x-apisports-key header. To use the RapidAPI gateway
 // instead, pass its base URL to NewWithDomain; the client sends the RapidAPI
-// headers as well, so both providers work without further configuration.
+// headers only for that host.
 //
 // # Calling endpoints
 //

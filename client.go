@@ -72,11 +72,12 @@ func (c *Client) get(endpoint string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add(authKey, c.key)
-	req.Header.Add(hostKey, hostVal)
-	// The direct v3.football.api-sports.io API authenticates with this header;
-	// RapidAPI ignores it, so it is safe to send in both modes.
-	req.Header.Add(apiSportsKey, c.key)
+	if strings.EqualFold(req.URL.Hostname(), hostVal) {
+		req.Header.Set(authKey, c.key)
+		req.Header.Set(hostKey, hostVal)
+	} else {
+		req.Header.Set(apiSportsKey, c.key)
+	}
 
 	res, err := c.client.Do(req)
 	if err != nil {

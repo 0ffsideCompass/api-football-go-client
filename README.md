@@ -68,7 +68,7 @@ func main() {
 
 ## Authentication
 
-The client sends both authentication headers on every request, so it works with either provider without configuration:
+The client selects authentication headers from the request host; direct API requests send only `x-apisports-key`:
 
 - **Direct API** (`https://v3.football.api-sports.io/`, the default domain): authenticated via the `x-apisports-key` header, using the API key from your [api-football.com](https://www.api-football.com/) dashboard.
 - **RapidAPI**: use `client.NewWithDomain` with the RapidAPI base URL (`https://api-football-v1.p.rapidapi.com/v3/`) and your RapidAPI key, which is sent via the `X-RapidAPI-Key` header.
